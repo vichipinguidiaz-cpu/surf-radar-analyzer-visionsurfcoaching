@@ -4,548 +4,136 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vision Surf Coaching - Radar Performance Analyzer</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.10.3/recharts.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/react-dom.production.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-    }
-
-    .container {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .bg-slate-950 {
-      background-color: #020617;
-    }
-
-    .bg-slate-900 {
-      background-color: #0f172a;
-    }
-
-    .rounded-2xl {
-      border-radius: 1rem;
-    }
-
-    .rounded-xl {
-      border-radius: 0.75rem;
-    }
-
-    .rounded-lg {
-      border-radius: 0.5rem;
-    }
-
-    .rounded-full {
-      border-radius: 9999px;
-    }
-
-    .border {
-      border: 1px solid #334155;
-    }
-
-    .border-slate-800 {
-      border-color: #1e293b;
-    }
-
-    .border-slate-700 {
-      border-color: #334155;
-    }
-
-    .border-slate-600 {
-      border-color: #475569;
-    }
-
-    .border-amber-400 {
-      border-color: #fbbf24;
-    }
-
-    .border-amber-400\/30 {
-      border-color: rgba(251, 191, 36, 0.3);
-    }
-
-    .text-white {
-      color: #ffffff;
-    }
-
-    .text-slate-900 {
-      color: #0f172a;
-    }
-
-    .text-slate-300 {
-      color: #cbd5e1;
-    }
-
-    .text-slate-400 {
-      color: #94a3b8;
-    }
-
-    .text-slate-500 {
-      color: #64748b;
-    }
-
-    .text-slate-700 {
-      color: #475569;
-    }
-
-    .text-amber-400 {
-      color: #fbbf24;
-    }
-
-    .bg-amber-400 {
-      background-color: #fbbf24;
-    }
-
-    .bg-amber-300 {
-      background-color: #fcd34d;
-    }
-
-    .bg-slate-800 {
-      background-color: #1e293b;
-    }
-
-    .shadow-2xl {
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    }
-
-    .p-6 {
-      padding: 1.5rem;
-    }
-
-    .p-8 {
-      padding: 2rem;
-    }
-
-    .p-5 {
-      padding: 1.25rem;
-    }
-
-    .p-3 {
-      padding: 0.75rem;
-    }
-
-    .py-2\.5 {
-      padding-top: 0.625rem;
-      padding-bottom: 0.625rem;
-    }
-
-    .px-3 {
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-    }
-
-    .py-3 {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-    }
-
-    .px-5 {
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-    }
-
-    .py-2 {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-    }
-
-    .px-4 {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-
-    .px-1 {
-      padding-left: 0.25rem;
-      padding-right: 0.25rem;
-    }
-
-    .py-1\.5 {
-      padding-top: 0.375rem;
-      padding-bottom: 0.375rem;
-    }
-
-    .mb-6 {
-      margin-bottom: 1.5rem;
-    }
-
-    .mb-3 {
-      margin-bottom: 0.75rem;
-    }
-
-    .mb-2 {
-      margin-bottom: 0.5rem;
-    }
-
-    .mb-1 {
-      margin-bottom: 0.25rem;
-    }
-
-    .mb-4 {
-      margin-bottom: 1rem;
-    }
-
-    .mb-8 {
-      margin-bottom: 2rem;
-    }
-
-    .mb-5 {
-      margin-bottom: 1.25rem;
-    }
-
-    .mt-4 {
-      margin-top: 1rem;
-    }
-
-    .mt-3 {
-      margin-top: 0.75rem;
-    }
-
-    .mt-0\.5 {
-      margin-top: 0.125rem;
-    }
-
-    .mt-5 {
-      margin-top: 1.25rem;
-    }
-
-    .mt-0\.5 {
-      margin-top: 0.125rem;
-    }
-
-    .gap-2 {
-      gap: 0.5rem;
-    }
-
-    .gap-1\.5 {
-      gap: 0.375rem;
-    }
-
-    .gap-4 {
-      gap: 1rem;
-    }
-
-    .gap-3 {
-      gap: 0.75rem;
-    }
-
-    .flex {
-      display: flex;
-    }
-
-    .flex-col {
-      flex-direction: column;
-    }
-
-    .items-center {
-      align-items: center;
-    }
-
-    .items-start {
-      align-items: flex-start;
-    }
-
-    .justify-center {
-      justify-content: center;
-    }
-
-    .justify-between {
-      justify-content: space-between;
-    }
-
-    .grid {
-      display: grid;
-    }
-
-    .grid-cols-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .grid-cols-5 {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-
-    .grid-cols-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .max-w-md {
-      max-width: 28rem;
-    }
-
-    .max-w-xl {
-      max-width: 36rem;
-    }
-
-    .max-w-3xl {
-      max-width: 48rem;
-    }
-
-    .w-full {
-      width: 100%;
-    }
-
-    .w-6 {
-      width: 1.5rem;
-    }
-
-    .h-6 {
-      height: 1.5rem;
-    }
-
-    .h-1\.5 {
-      height: 0.375rem;
-    }
-
-    .h-full {
-      height: 100%;
-    }
-
-    .flex-shrink-0 {
-      flex-shrink: 0;
-    }
-
-    .space-y-2\.5 > * + * {
-      margin-top: 0.625rem;
-    }
-
-    .space-y-3 > * + * {
-      margin-top: 0.75rem;
-    }
-
-    .text-xs {
-      font-size: 0.75rem;
-    }
-
-    .text-sm {
-      font-size: 0.875rem;
-    }
-
-    .text-2xl {
-      font-size: 1.5rem;
-    }
-
-    .text-xl {
-      font-size: 1.25rem;
-    }
-
-    .leading-tight {
-      line-height: 1.25;
-    }
-
-    .leading-relaxed {
-      line-height: 1.625;
-    }
-
-    .font-bold {
-      font-weight: 700;
-    }
-
-    .font-semibold {
-      font-weight: 600;
-    }
-
-    .font-medium {
-      font-weight: 500;
-    }
-
-    .tracking-wider {
-      letter-spacing: 0.05em;
-    }
-
-    .tracking-wide {
-      letter-spacing: 0.025em;
-    }
-
-    .uppercase {
-      text-transform: uppercase;
-    }
-
-    .hover\:text-amber-400:hover {
-      color: #fbbf24;
-    }
-
-    .hover\:border-amber-400:hover {
-      border-color: #fbbf24;
-    }
-
-    .hover\:border-amber-400\/60:hover {
-      border-color: rgba(251, 191, 36, 0.6);
-    }
-
-    .hover\:bg-amber-300:hover {
-      background-color: #fcd34d;
-    }
-
-    .hover\:bg-slate-800:hover {
-      background-color: #1e293b;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: inherit;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
-    textarea {
-      font-family: inherit;
-      resize: vertical;
-    }
-
-    textarea:focus {
-      border-color: #fbbf24;
-      outline: none;
-    }
-
-    .transition-colors {
-      transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 200ms;
-    }
-
-    .transition-all {
-      transition-property: all;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 200ms;
-    }
-
-    .overflow-hidden {
-      overflow: hidden;
-    }
-
-    .animate-spin {
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .focus\:outline-none:focus {
-      outline: none;
-    }
-
-    .focus\:border-amber-400:focus {
-      border-color: #fbbf24;
-    }
-
-    .last\:border-b-0:last-child {
-      border-bottom: none;
-    }
-
-    .last\:pb-0:last-child {
-      padding-bottom: 0;
-    }
-
-    .last\:mb-0:last-child {
-      margin-bottom: 0;
-    }
-
-    .inline-flex {
-      display: inline-flex;
-    }
-
-    .from-slate-800 {
-      --tw-gradient-from: #1e293b var(--tw-gradient-stops);
-      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(30 41 59 / 0));
-    }
-
-    .to-slate-900 {
-      --tw-gradient-to: #0f172a;
-    }
-
-    .bg-gradient-to-br {
-      background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
-    }
-
-    .block {
-      display: block;
-    }
-
-    .inline {
-      display: inline;
-    }
-
-    @media (max-width: 768px) {
-      .md\:p-8 {
-        padding: 1.5rem;
-      }
-
-      .md\:grid-cols-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .sm\:text-xs {
-        font-size: 0.75rem;
-      }
-    }
-
-    .pb-5 {
-      padding-bottom: 1.25rem;
-    }
-
-    .border-b {
-      border-bottom: 1px solid #334155;
-    }
-
-    .gap-1\.5 {
-      gap: 0.375rem;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    a:hover {
-      opacity: 0.9;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    textarea {
-      background-color: #1e293b;
-      color: #e2e8f0;
-      border: 1px solid #334155;
-      padding: 0.625rem 1rem;
-      border-radius: 0.5rem;
-    }
-
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    textarea:focus {
-      border-color: #fbbf24;
-      outline: none;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif; background: #0f172a; color: #e2e8f0; }
+    .container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .bg-slate-950 { background-color: #020617; }
+    .bg-slate-900 { background-color: #0f172a; }
+    .rounded-2xl { border-radius: 1rem; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .rounded-full { border-radius: 9999px; }
+    .border { border: 1px solid #334155; }
+    .border-slate-800 { border-color: #1e293b; }
+    .border-slate-700 { border-color: #334155; }
+    .border-slate-600 { border-color: #475569; }
+    .border-amber-400 { border-color: #fbbf24; }
+    .border-amber-400\/30 { border-color: rgba(251, 191, 36, 0.3); }
+    .text-white { color: #ffffff; }
+    .text-slate-900 { color: #0f172a; }
+    .text-slate-300 { color: #cbd5e1; }
+    .text-slate-400 { color: #94a3b8; }
+    .text-slate-500 { color: #64748b; }
+    .text-slate-700 { color: #475569; }
+    .text-amber-400 { color: #fbbf24; }
+    .bg-amber-400 { background-color: #fbbf24; }
+    .bg-amber-300 { background-color: #fcd34d; }
+    .bg-slate-800 { background-color: #1e293b; }
+    .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+    .p-6 { padding: 1.5rem; }
+    .p-8 { padding: 2rem; }
+    .p-5 { padding: 1.25rem; }
+    .p-3 { padding: 0.75rem; }
+    .py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
+    .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-1 { margin-bottom: 0.25rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mb-5 { margin-bottom: 1.25rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mt-3 { margin-top: 0.75rem; }
+    .mt-0\.5 { margin-top: 0.125rem; }
+    .mt-5 { margin-top: 1.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-1\.5 { gap: 0.375rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-3 { gap: 0.75rem; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .items-start { align-items: flex-start; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .grid { display: grid; }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .max-w-md { max-width: 28rem; }
+    .max-w-xl { max-width: 36rem; }
+    .max-w-3xl { max-width: 48rem; }
+    .w-full { width: 100%; }
+    .w-6 { width: 1.5rem; }
+    .w-5 { width: 1.25rem; }
+    .w-4 { width: 1rem; }
+    .w-9 { width: 2.25rem; }
+    .h-6 { height: 1.5rem; }
+    .h-1\.5 { height: 0.375rem; }
+    .h-full { height: 100%; }
+    .h-5 { height: 1.25rem; }
+    .h-4 { height: 1rem; }
+    .h-9 { height: 2.25rem; }
+    .flex-shrink-0 { flex-shrink: 0; }
+    .space-y-2\.5 > * + * { margin-top: 0.625rem; }
+    .space-y-3 > * + * { margin-top: 0.75rem; }
+    .text-xs { font-size: 0.75rem; }
+    .text-sm { font-size: 0.875rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-xl { font-size: 1.25rem; }
+    .leading-tight { line-height: 1.25; }
+    .leading-relaxed { line-height: 1.625; }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .font-medium { font-weight: 500; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .tracking-wide { letter-spacing: 0.025em; }
+    .uppercase { text-transform: uppercase; }
+    .hover\:text-amber-400:hover { color: #fbbf24; }
+    .hover\:border-amber-400:hover { border-color: #fbbf24; }
+    .hover\:border-amber-400\/60:hover { border-color: rgba(251, 191, 36, 0.6); }
+    .hover\:bg-amber-300:hover { background-color: #fcd34d; }
+    .hover\:bg-slate-800:hover { background-color: #1e293b; }
+    button { border: none; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+    button:disabled { cursor: not-allowed; opacity: 0.5; }
+    textarea { font-family: inherit; resize: vertical; }
+    textarea:focus { border-color: #fbbf24; outline: none; }
+    .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 200ms; }
+    .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 200ms; }
+    .overflow-hidden { overflow: hidden; }
+    .animate-spin { animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .focus\:outline-none:focus { outline: none; }
+    .focus\:border-amber-400:focus { border-color: #fbbf24; }
+    .last\:border-b-0:last-child { border-bottom: none; }
+    .last\:pb-0:last-child { padding-bottom: 0; }
+    .last\:mb-0:last-child { margin-bottom: 0; }
+    .inline-flex { display: inline-flex; }
+    .from-slate-800 { --tw-gradient-from: #1e293b var(--tw-gradient-stops); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(30 41 59 / 0)); }
+    .to-slate-900 { --tw-gradient-to: #0f172a; }
+    .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+    .block { display: block; }
+    .inline { display: inline; }
+    @media (max-width: 768px) { .md\:p-8 { padding: 1.5rem; } .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .sm\:text-xs { font-size: 0.75rem; } }
+    .pb-5 { padding-bottom: 1.25rem; }
+    .border-b { border-bottom: 1px solid #334155; }
+    a { text-decoration: none; color: inherit; }
+    a:hover { opacity: 0.9; }
+    input[type="text"], input[type="email"], textarea { background-color: #1e293b; color: #e2e8f0; border: 1px solid #334155; padding: 0.625rem 1rem; border-radius: 0.5rem; }
+    input[type="text"]:focus, input[type="email"]:focus, textarea:focus { border-color: #fbbf24; outline: none; }
   </style>
 </head>
 <body>
   <div id="root"></div>
-
   <script>
-    // Utility SVG Icons
     const Icons = {
       Waves: () => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m6.364 1.636l-.707.707M21 12h-1m-1.636 6.364l-.707-.707M12 21v-1m-6.364-1.636l.707-.707M3 12h1m1.636-6.364l.707.707"/><path d="M12 7a5 5 0 0 1 5 5m0 0a5 5 0 0 1-5 5m0-10a5 5 0 0 0-5 5m0 0a5 5 0 0 0 5 5"/></svg>`,
       ArrowRight: () => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
@@ -567,85 +155,25 @@
 
     const AXES = {
       technical: [
-        { key: "popup", title: { en: "Pop-up & Bottom Turn", es: "Pop-up y Bottom Turn" },
-          q1: { text: { en: "How consistent is your pop-up under pressure?", es: "¿Qué tan consistente es tu pop-up bajo presión?" },
-            opts: { en: ["Always nail it", "Almost always", "Sometimes", "Rarely", "Almost never"], es: ["Siempre lo logro", "Casi siempre", "A veces", "Rara vez", "Casi nunca"] } },
-          q2: { text: { en: "How effective is your bottom turn at generating speed and angle?", es: "¿Qué tan efectivo es tu bottom turn para generar velocidad y ángulo?" },
-            opts: { en: ["Very effective", "Effective", "Somewhat effective", "Not very effective", "Not effective at all"], es: ["Muy efectivo", "Efectivo", "Algo efectivo", "Poco efectivo", "Nada efectivo"] } } },
-        { key: "pumping", title: { en: "Pumping (generating speed)", es: "Pumping (generar velocidad)" },
-          q1: { text: { en: "How well do you generate speed on flat sections?", es: "¿Qué tan bien generas velocidad en secciones planas?" },
-            opts: { en: ["Excellent", "Good", "Average", "Limited", "None"], es: ["Excelente", "Buena", "Regular", "Limitada", "Nula"] } },
-          q2: { text: { en: "How often do you lose speed or fall behind the wave?", es: "¿Qué tan seguido pierdes velocidad o te quedas atrás de la ola?" },
-            opts: { en: ["Almost never", "Rarely", "Sometimes", "Often", "Almost always"], es: ["Casi nunca", "Rara vez", "A veces", "Frecuentemente", "Casi siempre"] } } },
-        { key: "maneuvers", title: { en: "Cutback / Snap / Reentry-Top Turn", es: "Cutback / Snap / Reentry-Top Turn" },
-          q1: { text: { en: "How consistent is your cutback (back to the pocket with speed)?", es: "¿Qué tan consistente es tu cutback (volver al pocket con velocidad)?" },
-            opts: { en: ["Always", "Almost always", "Sometimes", "Rarely", "Almost never"], es: ["Siempre", "Casi siempre", "A veces", "Rara vez", "Casi nunca"] } },
-          q2: { text: { en: "How consistent is your snap, reentry or top turn?", es: "¿Qué tan consistente es tu snap, reentry o top turn?" },
-            opts: { en: ["Very consistent", "Consistent", "Somewhat inconsistent", "Inconsistent", "Very inconsistent"], es: ["Muy consistente", "Consistente", "Algo inconsistente", "Inconsistente", "Muy inconsistente"] } } },
-        { key: "reading", title: { en: "Wave Reading & Flow", es: "Lectura de Olas y Fluidez" },
-          q1: { text: { en: "How often do you pick the right wave at the peak?", es: "¿Qué tan seguido eliges la ola correcta en el peak?" },
-            opts: { en: ["Almost always right", "Usually right", "Sometimes right", "Rarely right", "Almost never right"], es: ["Casi siempre acierto", "Generalmente acierto", "A veces acierto", "Rara vez acierto", "Casi nunca acierto"] } },
-          q2: { text: { en: "How fluid do you feel linking maneuvers start to end?", es: "¿Qué tan fluido te sientes conectando maniobras de principio a fin?" },
-            opts: { en: ["Very fluid", "Fluid", "Somewhat fluid", "Choppy", "Not fluid at all"], es: ["Muy fluido", "Fluido", "Algo fluido", "Poco fluido", "Nada fluido"] } } },
-        { key: "bigwaves", title: { en: "Big/Demanding Conditions & Positioning", es: "Condiciones Grandes/Exigentes y Posicionamiento" },
-          q1: { text: { en: "How comfortable are you paddling/positioning in big conditions?", es: "¿Qué tan cómodo te sientes remando y posicionándote en condiciones grandes?" },
-            opts: { en: ["Totally comfortable", "Quite comfortable", "A bit uneasy", "Quite uneasy", "Very uneasy / avoid it"], es: ["Totalmente cómodo", "Bastante cómodo", "Algo incómodo", "Bastante incómodo", "Muy incómodo / lo evito"] } },
-          q2: { text: { en: "How well do you handle falls or hold-downs in those conditions?", es: "¿Qué tan bien manejas caídas o hold-downs en esas condiciones?" },
-            opts: { en: ["Very well", "Well", "Okay", "Poorly", "Very poorly"], es: ["Muy bien", "Bien", "A medias", "Mal", "Muy mal"] } } },
+        { key: "popup", title: { en: "Pop-up & Bottom Turn", es: "Pop-up y Bottom Turn" }, q1: { text: { en: "How consistent is your pop-up under pressure?", es: "¿Qué tan consistente es tu pop-up bajo presión?" }, opts: { en: ["Always nail it", "Almost always", "Sometimes", "Rarely", "Almost never"], es: ["Siempre lo logro", "Casi siempre", "A veces", "Rara vez", "Casi nunca"] } }, q2: { text: { en: "How effective is your bottom turn?", es: "¿Qué tan efectivo es tu bottom turn?" }, opts: { en: ["Very effective", "Effective", "Somewhat effective", "Not very effective", "Not effective"], es: ["Muy efectivo", "Efectivo", "Algo efectivo", "Poco efectivo", "Nada efectivo"] } } },
+        { key: "pumping", title: { en: "Pumping (generating speed)", es: "Pumping (generar velocidad)" }, q1: { text: { en: "How well do you generate speed on flat sections?", es: "¿Qué tan bien generas velocidad?" }, opts: { en: ["Excellent", "Good", "Average", "Limited", "None"], es: ["Excelente", "Buena", "Regular", "Limitada", "Nula"] } }, q2: { text: { en: "How often do you lose speed?", es: "¿Qué tan seguido pierdes velocidad?" }, opts: { en: ["Almost never", "Rarely", "Sometimes", "Often", "Almost always"], es: ["Casi nunca", "Rara vez", "A veces", "Frecuentemente", "Casi siempre"] } } },
+        { key: "maneuvers", title: { en: "Cutback / Snap / Top Turn", es: "Cutback / Snap / Top Turn" }, q1: { text: { en: "How consistent is your cutback?", es: "¿Qué tan consistente es tu cutback?" }, opts: { en: ["Always", "Almost always", "Sometimes", "Rarely", "Almost never"], es: ["Siempre", "Casi siempre", "A veces", "Rara vez", "Casi nunca"] } }, q2: { text: { en: "How consistent are your maneuvers?", es: "¿Qué tan consistentes son tus maniobras?" }, opts: { en: ["Very consistent", "Consistent", "Somewhat", "Inconsistent", "Very inconsistent"], es: ["Muy consistente", "Consistente", "Algo", "Inconsistente", "Muy inconsistente"] } } },
+        { key: "reading", title: { en: "Wave Reading & Flow", es: "Lectura de Olas" }, q1: { text: { en: "How often do you pick the right wave?", es: "¿Qué tan seguido eliges bien?" }, opts: { en: ["Almost always", "Usually", "Sometimes", "Rarely", "Almost never"], es: ["Casi siempre", "Generalmente", "A veces", "Rara vez", "Casi nunca"] } }, q2: { text: { en: "How fluid is your surfing?", es: "¿Qué tan fluido es tu surf?" }, opts: { en: ["Very fluid", "Fluid", "Somewhat", "Choppy", "Not fluid"], es: ["Muy fluido", "Fluido", "Algo", "Poco fluido", "Nada fluido"] } } },
+        { key: "bigwaves", title: { en: "Big Wave Comfort", es: "Comodidad en Olas Grandes" }, q1: { text: { en: "How comfortable in big waves?", es: "¿Qué tan cómodo?" }, opts: { en: ["Totally comfortable", "Quite", "A bit uneasy", "Quite uneasy", "Very uneasy"], es: ["Totalmente cómodo", "Bastante", "Algo incómodo", "Bastante incómodo", "Muy incómodo"] } }, q2: { text: { en: "How well do you handle wipeouts?", es: "¿Cómo manejas wipeouts?" }, opts: { en: ["Very well", "Well", "Okay", "Poorly", "Very poorly"], es: ["Muy bien", "Bien", "Okay", "Mal", "Muy mal"] } } },
       ],
       physical: [
-        { key: "strength", title: { en: "General Strength", es: "Fuerza General" },
-          q1: { text: { en: "How would you rate your paddling strength (arms/back)?", es: "¿Cómo calificas tu fuerza de remada (brazos/espalda)?" },
-            opts: { en: ["Very strong", "Strong", "Moderate", "Weak", "Very weak"], es: ["Muy fuerte", "Fuerte", "Moderada", "Débil", "Muy débil"] } },
-          q2: { text: { en: "How would you rate your leg/lower body strength for maneuvers?", es: "¿Cómo calificas tu fuerza de piernas/tren inferior para maniobras?" },
-            opts: { en: ["Very powerful", "Powerful", "Moderate", "Limited", "Very limited"], es: ["Muy potente", "Potente", "Moderada", "Limitada", "Muy limitada"] } } },
-        { key: "endurance", title: { en: "Endurance & Paddling", es: "Resistencia y Remada" },
-          q1: { text: { en: "How well do you hold up through a full session without fatigue?", es: "¿Qué tan bien aguantas una sesión completa sin fatigarte?" },
-            opts: { en: ["The whole session", "Most of it", "About half", "I tire quickly", "I tire very quickly"], es: ["Toda la sesión", "La mayoría", "Cerca de la mitad", "Me canso rápido", "Me agoto muy rápido"] } },
-          q2: { text: { en: "How fast do you recover between sets or waves?", es: "¿Qué tan rápido te recuperas entre series u olas?" },
-            opts: { en: ["Very fast", "Fast", "Moderate", "Slow", "Very slow"], es: ["Muy rápida", "Rápida", "Moderada", "Lenta", "Muy lenta"] } } },
-        { key: "mobility", title: { en: "Mobility & Flexibility", es: "Movilidad y Flexibilidad" },
-          q1: { text: { en: "How is your range of motion in hips/shoulders for maneuvers?", es: "¿Cómo es tu rango de movimiento en caderas/hombros para maniobras?" },
-            opts: { en: ["Excellent", "Good", "Moderate", "Limited", "Very limited"], es: ["Excelente", "Buena", "Moderada", "Limitada", "Muy limitada"] } },
-          q2: { text: { en: "How often does stiffness limit you in the water?", es: "¿Con qué frecuencia la rigidez te limita en el agua?" },
-            opts: { en: ["Almost never", "Rarely", "Sometimes", "Often", "Almost always"], es: ["Casi nunca", "Rara vez", "A veces", "Frecuentemente", "Casi siempre"] } } },
-        { key: "core", title: { en: "Core", es: "Core" },
-          q1: { text: { en: "How stable does your core feel during maneuvers?", es: "¿Qué tan estable sientes tu core al hacer maniobras?" },
-            opts: { en: ["Very stable", "Stable", "Somewhat unstable", "Unstable", "Very unstable"], es: ["Muy estable", "Estable", "Algo inestable", "Inestable", "Muy inestable"] } },
-          q2: { text: { en: "How often do you train your core specifically?", es: "¿Qué tan seguido entrenas core de forma específica?" },
-            opts: { en: ["Always", "Often", "Sometimes", "Rarely", "Never"], es: ["Siempre", "Frecuentemente", "A veces", "Rara vez", "Nunca"] } } },
-        { key: "apnea", title: { en: "Apnea & Breath Control", es: "Apnea y Control de Respiración" },
-          q1: { text: { en: "How do you feel holding your breath during a hold-down?", es: "¿Cómo te sientes conteniendo la respiración en un hold-down?" },
-            opts: { en: ["Totally calm", "Quite calm", "A bit anxious", "Quite anxious", "Panic / avoid it"], es: ["Totalmente tranquilo", "Bastante tranquilo", "Algo de ansiedad", "Bastante ansiedad", "Pánico / lo evito"] } },
-          q2: { text: { en: "How often do you train apnea or breath control?", es: "¿Qué tan seguido entrenas apnea o control de respiración?" },
-            opts: { en: ["Always", "Often", "Sometimes", "Rarely", "Never"], es: ["Siempre", "Frecuentemente", "A veces", "Rara vez", "Nunca"] } } },
+        { key: "strength", title: { en: "General Strength", es: "Fuerza General" }, q1: { text: { en: "Paddling strength?", es: "¿Fuerza de remada?" }, opts: { en: ["Very strong", "Strong", "Moderate", "Weak", "Very weak"], es: ["Muy fuerte", "Fuerte", "Moderada", "Débil", "Muy débil"] } }, q2: { text: { en: "Leg strength?", es: "¿Fuerza de piernas?" }, opts: { en: ["Very powerful", "Powerful", "Moderate", "Limited", "Very limited"], es: ["Muy potente", "Potente", "Moderada", "Limitada", "Muy limitada"] } } },
+        { key: "endurance", title: { en: "Endurance", es: "Resistencia" }, q1: { text: { en: "Session stamina?", es: "¿Resistencia en sesión?" }, opts: { en: ["Full session", "Most", "Half", "Tire quickly", "Very quickly"], es: ["Toda", "La mayoría", "Mitad", "Rápido", "Muy rápido"] } }, q2: { text: { en: "Recovery speed?", es: "¿Velocidad de recuperación?" }, opts: { en: ["Very fast", "Fast", "Moderate", "Slow", "Very slow"], es: ["Muy rápida", "Rápida", "Moderada", "Lenta", "Muy lenta"] } } },
+        { key: "mobility", title: { en: "Mobility", es: "Movilidad" }, q1: { text: { en: "Range of motion?", es: "¿Rango de movimiento?" }, opts: { en: ["Excellent", "Good", "Moderate", "Limited", "Very limited"], es: ["Excelente", "Buena", "Moderada", "Limitada", "Muy limitada"] } }, q2: { text: { en: "Does stiffness limit you?", es: "¿Te limita la rigidez?" }, opts: { en: ["Almost never", "Rarely", "Sometimes", "Often", "Almost always"], es: ["Casi nunca", "Rara vez", "A veces", "Frecuentemente", "Casi siempre"] } } },
+        { key: "core", title: { en: "Core Stability", es: "Estabilidad de Core" }, q1: { text: { en: "Core stability?", es: "¿Estabilidad?" }, opts: { en: ["Very stable", "Stable", "Somewhat", "Unstable", "Very unstable"], es: ["Muy estable", "Estable", "Algo", "Inestable", "Muy inestable"] } }, q2: { text: { en: "Train core specifically?", es: "¿Entrenar core?" }, opts: { en: ["Always", "Often", "Sometimes", "Rarely", "Never"], es: ["Siempre", "Frecuentemente", "A veces", "Rara vez", "Nunca"] } } },
+        { key: "apnea", title: { en: "Breath Control", es: "Control de Respiración" }, q1: { text: { en: "During hold-downs?", es: "¿Durante hold-downs?" }, opts: { en: ["Totally calm", "Quite calm", "Bit anxious", "Quite anxious", "Panic"], es: ["Totalmente tranquilo", "Bastante", "Algo de ansiedad", "Bastante ansiedad", "Pánico"] } }, q2: { text: { en: "Train breath control?", es: "¿Entrenar respiración?" }, opts: { en: ["Always", "Often", "Sometimes", "Rarely", "Never"], es: ["Siempre", "Frecuentemente", "A veces", "Rara vez", "Nunca"] } } },
       ],
       psych: [
-        { key: "fear", title: { en: "Fear / Pressure Management", es: "Manejo de Miedo / Presión" },
-          q1: { text: { en: "How calm do you stay in conditions that intimidate you?", es: "¿Qué tan calmado te mantienes en condiciones que te intimidan?" },
-            opts: { en: ["Totally calm", "Quite calm", "A bit nervous", "Quite anxious", "Very anxious"], es: ["Totalmente calmado", "Bastante calmado", "Algo nervioso", "Bastante ansioso", "Muy ansioso"] } },
-          q2: { text: { en: "How often does fear make you avoid waves or opportunities?", es: "¿Qué tan seguido el miedo te hace evitar olas u oportunidades?" },
-            opts: { en: ["Almost never", "Rarely", "Sometimes", "Often", "Almost always"], es: ["Casi nunca", "Rara vez", "A veces", "Frecuentemente", "Casi siempre"] } } },
-        { key: "resilience", title: { en: "Resilience After Mistakes", es: "Resiliencia ante Errores" },
-          q1: { text: { en: "After a bad session, how fast do you regain confidence?", es: "Después de una mala sesión, ¿qué tan rápido recuperas la confianza?" },
-            opts: { en: ["Very fast", "Fast", "Moderate", "Slow", "I struggle to recover it"], es: ["Muy rápido", "Rápido", "Moderado", "Lento", "Me cuesta recuperarla"] } },
-          q2: { text: { en: "How much does repeatedly failing a maneuver affect you mentally?", es: "¿Qué tanto te afecta mentalmente fallar una maniobra repetidamente?" },
-            opts: { en: ["Not at all", "A little", "Moderately", "Quite a bit", "A lot, it blocks me"], es: ["Nada, sigo igual", "Un poco", "Moderadamente", "Bastante", "Mucho, me bloquea"] } } },
-        { key: "consistency", title: { en: "Consistency & Surf Frequency", es: "Consistencia y Frecuencia de Surf" },
-          q1: { text: { en: "How often do you surf in a normal week?", es: "¿Qué tan seguido surfeas en una semana normal?" },
-            opts: { en: ["Almost daily", "Several times a week", "1-2 times a week", "A few times a month", "Almost never"], es: ["Casi diario", "Varias veces por semana", "1-2 veces por semana", "Pocas veces al mes", "Casi nunca"] } },
-          q2: { text: { en: "How consistent are you even when conditions aren't ideal?", es: "¿Qué tan constante eres aunque las condiciones no sean ideales?" },
-            opts: { en: ["Always go", "Almost always", "Sometimes", "Rarely", "Never go"], es: ["Siempre voy", "Casi siempre", "A veces", "Rara vez", "Nunca voy"] } } },
-        { key: "discipline", title: { en: "Training Discipline", es: "Disciplina de Entrenamiento" },
-          q1: { text: { en: "How often do you train outside the water (gym, mobility, etc)?", es: "¿Qué tan seguido entrenas fuera del agua (gym, movilidad, etc)?" },
-            opts: { en: ["Almost daily", "Several times a week", "1-2 times a week", "Rarely", "Never"], es: ["Casi diario", "Varias veces por semana", "1-2 veces por semana", "Rara vez", "Nunca"] } },
-          q2: { text: { en: "How well do you stick to your routine without skipping sessions?", es: "¿Qué tan bien sigues tu rutina sin saltarte sesiones?" },
-            opts: { en: ["Always", "Almost always", "Sometimes", "Rarely", "Never"], es: ["Siempre", "Casi siempre", "A veces", "Rara vez", "Nunca"] } } },
-        { key: "feedback", title: { en: "Openness to Feedback & Structure", es: "Apertura a Feedback y Estructura" },
-          q1: { text: { en: "How open are you to receiving and applying technical feedback?", es: "¿Qué tan abierto estás a recibir y aplicar feedback técnico?" },
-            opts: { en: ["Totally open", "Quite open", "Somewhat open", "Not very open", "Not open at all"], es: ["Totalmente abierto", "Bastante abierto", "Algo abierto", "Poco abierto", "Nada abierto"] } },
-          q2: { text: { en: "How willing are you to follow a structured weekly plan?", es: "¿Qué tan dispuesto estás a seguir un plan estructurado semana a semana?" },
-            opts: { en: ["Totally willing", "Quite willing", "Somewhat willing", "Not very willing", "Not willing at all"], es: ["Totalmente dispuesto", "Bastante dispuesto", "Algo dispuesto", "Poco dispuesto", "Nada dispuesto"] } } },
+        { key: "fear", title: { en: "Fear Management", es: "Manejo de Miedo" }, q1: { text: { en: "Stay calm when intimidated?", es: "¿Permaneces calmado?" }, opts: { en: ["Totally calm", "Quite calm", "Bit nervous", "Quite anxious", "Very anxious"], es: ["Totalmente calmado", "Bastante", "Algo nervioso", "Bastante ansioso", "Muy ansioso"] } }, q2: { text: { en: "Fear makes you avoid waves?", es: "¿El miedo te hace evitar?" }, opts: { en: ["Almost never", "Rarely", "Sometimes", "Often", "Almost always"], es: ["Casi nunca", "Rara vez", "A veces", "Frecuentemente", "Casi siempre"] } } },
+        { key: "resilience", title: { en: "Resilience", es: "Resiliencia" }, q1: { text: { en: "Regain confidence after bad session?", es: "¿Recuperar confianza?" }, opts: { en: ["Very fast", "Fast", "Moderate", "Slow", "Struggle"], es: ["Muy rápido", "Rápido", "Moderado", "Lento", "Me cuesta"] } }, q2: { text: { en: "Repeated failures affect you?", es: "¿Afectan fracasos repetidos?" }, opts: { en: ["Not at all", "A little", "Moderately", "Quite a bit", "A lot"], es: ["Nada", "Un poco", "Moderadamente", "Bastante", "Mucho"] } } },
+        { key: "consistency", title: { en: "Consistency", es: "Consistencia" }, q1: { text: { en: "Surf frequency per week?", es: "¿Frecuencia por semana?" }, opts: { en: ["Almost daily", "Several times", "1-2 times", "Few times month", "Almost never"], es: ["Casi diario", "Varias veces", "1-2 veces", "Pocas veces", "Casi nunca"] } }, q2: { text: { en: "Consistent despite conditions?", es: "¿Consistente con condiciones?" }, opts: { en: ["Always go", "Almost always", "Sometimes", "Rarely", "Never go"], es: ["Siempre", "Casi siempre", "A veces", "Rara vez", "Nunca"] } } },
+        { key: "discipline", title: { en: "Training Discipline", es: "Disciplina" }, q1: { text: { en: "Train outside water?", es: "¿Entrenar fuera?" }, opts: { en: ["Almost daily", "Several times", "1-2 times", "Rarely", "Never"], es: ["Casi diario", "Varias veces", "1-2 veces", "Rara vez", "Nunca"] } }, q2: { text: { en: "Stick to routine?", es: "¿Seguir rutina?" }, opts: { en: ["Always", "Almost always", "Sometimes", "Rarely", "Never"], es: ["Siempre", "Casi siempre", "A veces", "Rara vez", "Nunca"] } } },
+        { key: "feedback", title: { en: "Openness to Feedback", es: "Apertura a Feedback" }, q1: { text: { en: "Accept technical feedback?", es: "¿Aceptar feedback?" }, opts: { en: ["Totally open", "Quite open", "Somewhat", "Not very", "Not at all"], es: ["Totalmente abierto", "Bastante", "Algo", "Poco", "Nada"] } }, q2: { text: { en: "Follow structured plan?", es: "¿Seguir plan?" }, opts: { en: ["Totally willing", "Quite willing", "Somewhat", "Not very", "Not at all"], es: ["Totalmente", "Bastante", "Algo", "Poco", "Nada"] } } },
       ],
     };
 
@@ -656,74 +184,61 @@
         brand: "VISION SURF COACHING",
         chooseLang: "Choose your language",
         landingTitle: "Surf Performance Radar",
-        landingDesc: "A quick, anonymous self-assessment across technical, physical and mental performance. Answer honestly — at the end you'll see exactly where your biggest opportunities are.",
+        landingDesc: "A quick, anonymous self-assessment. Answer honestly — see where your biggest opportunities are.",
         bullets: ["3 performance radars: Technical, Physical & Mental", "Current level vs. where you want to be", "100% anonymous — no personal info needed"],
         start: "Start My Assessment",
         back: "Back", next: "Next", submit: "See My Results",
         step: "Step", of: "of",
-        chartTitles: { technical: "Surf — Technical/Tactical", physical: "Physical Preparation & Apnea", psych: "Psychological & Habits" },
-        actualLabel: "Current", objLabel: "Where I want to be",
-        objQuestionPrefix: "Where do you want to be in",
+        chartTitles: { technical: "Technical/Tactical", physical: "Physical Preparation", psych: "Psychological & Habits" },
         openTitle: "Last Two Questions",
-        openGoal: "What's your main goal in your surfing right now?",
-        openChallenge: "What's the biggest challenge holding you back right now?",
-        fieldsRequired: "Please answer all questions before continuing.",
-        loadingMsgs: ["Crunching your scores", "Mapping your radars", "Spotting the patterns", "Drafting your breakdown"],
-        errorTitle: "Something went wrong", errorDesc: "We couldn't generate your analysis. Please try again.", retry: "Try Again",
-        resultsTitle: "Your Performance Breakdown",
-        levelLabel: "Estimated Level",
-        interpretationTitle: "What Your Radars Are Showing",
-        opportunityTitle: "Biggest Opportunity Areas",
-        ctaTitle: "Want to work on this?",
-        ctaBtn: "Apply to the Program",
+        openGoal: "What's your main goal?",
+        openChallenge: "What's the biggest challenge?",
+        fieldsRequired: "Please answer all questions.",
+        loadingMsgs: ["Analyzing...", "Processing...", "Computing...", "Generating..."],
+        errorTitle: "Error", errorDesc: "Couldn't generate analysis. Try again.", retry: "Retry",
+        resultsTitle: "Your Results",
+        levelLabel: "Level",
+        interpretationTitle: "Analysis",
+        opportunityTitle: "Top Opportunities",
+        ctaTitle: "Ready to improve?",
+        ctaBtn: "Apply Now",
         startOver: "Start Over",
-        apiKeyPrompt: "Enter your Claude API Key",
-        apiKeyPlaceholder: "sk-ant-...",
-        saveKey: "Save & Continue",
       },
       es: {
         brand: "VISION SURF COACHING",
-        chooseLang: "Elige tu idioma",
-        landingTitle: "Radar de Rendimiento de Surf",
-        landingDesc: "Una autoevaluación rápida y anónima de tu rendimiento técnico, físico y mental. Responde con honestidad — al final verás exactamente dónde están tus mayores oportunidades.",
-        bullets: ["3 radares de rendimiento: Técnico, Físico y Mental", "Nivel actual vs. dónde quieres llegar", "100% anónimo — no se pide información personal"],
-        start: "Comenzar Mi Evaluación",
-        back: "Atrás", next: "Siguiente", submit: "Ver Mis Resultados",
+        chooseLang: "Elige idioma",
+        landingTitle: "Radar de Rendimiento",
+        landingDesc: "Autoevaluación rápida y anónima. Responde con honestidad.",
+        bullets: ["3 radares: Técnico, Físico y Mental", "Nivel actual vs. objetivo", "100% anónimo"],
+        start: "Comenzar",
+        back: "Atrás", next: "Siguiente", submit: "Ver Resultados",
         step: "Paso", of: "de",
-        chartTitles: { technical: "Surf — Técnico/Táctico", physical: "Preparación Física y Apnea", psych: "Psicológico y Hábitos" },
-        actualLabel: "Actual", objLabel: "Dónde quiero llegar",
-        objQuestionPrefix: "¿Dónde quieres llegar en",
-        openTitle: "Últimas Dos Preguntas",
-        openGoal: "¿Cuál es tu meta principal con tu surf en este momento?",
-        openChallenge: "¿Cuál es el mayor desafío que te está frenando ahora?",
-        fieldsRequired: "Por favor responde todas las preguntas antes de continuar.",
-        loadingMsgs: ["Calculando tus puntajes", "Construyendo tus radares", "Detectando los patrones", "Redactando tu desglose"],
-        errorTitle: "Algo salió mal", errorDesc: "No pudimos generar tu análisis. Intenta de nuevo.", retry: "Intentar de Nuevo",
-        resultsTitle: "Tu Desglose de Rendimiento",
-        levelLabel: "Nivel Estimado",
-        interpretationTitle: "Lo Que Muestran Tus Radares",
-        opportunityTitle: "Mayores Áreas de Oportunidad",
-        ctaTitle: "¿Quieres trabajar en esto?",
-        ctaBtn: "Postular al Programa",
+        chartTitles: { technical: "Técnico/Táctico", physical: "Preparación Física", psych: "Psicológico y Hábitos" },
+        openTitle: "Últimas Preguntas",
+        openGoal: "¿Cuál es tu meta?",
+        openChallenge: "¿Cuál es el mayor desafío?",
+        fieldsRequired: "Responde todas las preguntas.",
+        loadingMsgs: ["Analizando...", "Procesando...", "Calculando...", "Generando..."],
+        errorTitle: "Error", errorDesc: "No pudimos generar análisis. Intenta de nuevo.", retry: "Reintentar",
+        resultsTitle: "Tus Resultados",
+        levelLabel: "Nivel",
+        interpretationTitle: "Análisis",
+        opportunityTitle: "Principales Oportunidades",
+        ctaTitle: "¿Listo para mejorar?",
+        ctaBtn: "Postular",
         startOver: "Empezar de Nuevo",
-        apiKeyPrompt: "Ingresa tu Clave API de Claude",
-        apiKeyPlaceholder: "sk-ant-...",
-        saveKey: "Guardar y Continuar",
       },
     };
 
-    // State management
     let state = {
       lang: "es",
       step: 0,
-      apiKey: localStorage.getItem("claude_api_key") || "",
       answers: emptyAnswers(),
       loading: false,
       loadingIdx: 0,
       error: false,
       result: null,
       showWarn: false,
-      loadingInterval: null,
     };
 
     function emptyAnswers() {
@@ -737,34 +252,79 @@
       return a;
     }
 
+    function generateAnalysis() {
+      const chartOrder = ["technical", "physical", "psych"];
+      const scores = {};
+      const gaps = {};
+      
+      chartOrder.forEach(chart => {
+        const chartScores = AXES[chart].map(ax => {
+          const v = state.answers[chart][ax.key];
+          const actual = (SCORES[v.q1] + SCORES[v.q2]) / 2;
+          const target = v.obj !== null ? SCORES[v.obj] : 2.5;
+          return { actual, target, title: ax.title[state.lang] };
+        });
+        scores[chart] = chartScores;
+        const avgActual = chartScores.reduce((s, a) => s + a.actual, 0) / chartScores.length;
+        const avgTarget = chartScores.reduce((s, a) => s + a.target, 0) / chartScores.length;
+        gaps[chart] = { avgActual, avgTarget, gap: avgTarget - avgActual };
+      });
+
+      const overallScore = (scores.technical.reduce((s, a) => s + a.actual, 0) + scores.physical.reduce((s, a) => s + a.actual, 0) + scores.psych.reduce((s, a) => s + a.actual, 0)) / (AXES.technical.length + AXES.physical.length + AXES.psych.length);
+      
+      let levelEstimate = state.lang === "es" ? "Principiante" : "Beginner";
+      if (overallScore >= 4.2) levelEstimate = state.lang === "es" ? "Avanzado" : "Advanced";
+      else if (overallScore >= 3.5) levelEstimate = state.lang === "es" ? "Intermedio" : "Intermediate";
+      else if (overallScore >= 2.8) levelEstimate = state.lang === "es" ? "Competente" : "Competent";
+
+      const topGaps = chartOrder.map(c => ({ chart: c, ...gaps[c] })).sort((a, b) => b.gap - a.gap).slice(0, 2);
+      const opportunities = [];
+      
+      topGaps.forEach(g => {
+        const weakAreas = scores[g.chart].filter(s => s.actual < 3).sort((a, b) => a.actual - b.actual);
+        if (weakAreas.length > 0) {
+          opportunities.push({
+            title: weakAreas[0].title,
+            note: state.lang === "es" 
+              ? "Es tu área con mayor potencial de crecimiento" 
+              : "Your biggest growth opportunity"
+          });
+        }
+      });
+
+      if (opportunities.length < 3) {
+        const allWeak = [];
+        chartOrder.forEach(c => {
+          scores[c].forEach(s => {
+            if (s.actual < 3.5 && !opportunities.find(o => o.title === s.title)) {
+              allWeak.push({ title: s.title, note: state.lang === "es" ? "Merece atención dedicada" : "Needs dedicated focus" });
+            }
+          });
+        });
+        opportunities.push(...allWeak.slice(0, 3 - opportunities.length));
+      }
+
+      const interpretation = state.lang === "es"
+        ? `Tu perfil muestra una combinación interesante de fortalezas y áreas de desarrollo. Con un nivel general de ${overallScore.toFixed(1)}/5, tus próximos pasos deben enfocarse en ${topGaps[0].chart === 'technical' ? 'consolidar técnica' : topGaps[0].chart === 'physical' ? 'preparación física' : 'consistencia mental'}. El coaching personalizado acelerará tu progresión.`
+        : `Your profile shows interesting strengths paired with clear development areas. At a ${overallScore.toFixed(1)}/5 overall level, focus on ${topGaps[0].chart === 'technical' ? 'technique' : topGaps[0].chart === 'physical' ? 'physical prep' : 'mental consistency'}. Personalized coaching will accelerate your progress.`;
+
+      const closing = state.lang === "es"
+        ? "Estás listo para el siguiente nivel. Nuestro programa está diseñado para atletas como tú que quieren ir más allá. Reserva tu sesión de consulta."
+        : "You're ready for the next level. Our program is built for surfers like you who want more. Book your consultation call.";
+
+      return {
+        levelEstimate,
+        interpretation,
+        opportunityAreas: opportunities.slice(0, 3),
+        closing,
+      };
+    }
+
     function render() {
       const t = STR[state.lang];
       const root = document.getElementById("root");
 
       if (state.step === 0) {
-        if (!state.apiKey) {
-          root.innerHTML = `
-            <div class="container bg-slate-950">
-              <div class="bg-slate-900 rounded-2xl max-w-md w-full p-8 shadow-2xl border border-slate-800">
-                <div class="flex items-center gap-2 text-amber-400 mb-6 justify-center">
-                  <div class="w-6 h-6">${Icons.Waves()}</div>
-                  <span class="text-xs font-bold tracking-wider">${t.brand}</span>
-                </div>
-                <h1 class="text-xl font-bold text-white mb-3 text-center">API Key Required</h1>
-                <p class="text-slate-400 text-sm leading-relaxed mb-4">Enter your Claude API key to use this app. Your key is stored locally in your browser and never sent to our servers.</p>
-                <input type="text" id="apiKeyInput" placeholder="${t.apiKeyPlaceholder}" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700 focus:border-amber-400 focus:outline-none text-sm text-slate-100 mb-4">
-                <button onclick="window.saveApiKey()" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
-                  ${t.saveKey}
-                </button>
-              </div>
-            </div>
-          `;
-          document.getElementById("apiKeyInput").addEventListener("keypress", (e) => {
-            if (e.key === "Enter") window.saveApiKey();
-          });
-          return;
-        }
-
         root.innerHTML = `
           <div class="container bg-slate-950">
             <div class="bg-slate-900 rounded-2xl max-w-md w-full p-8 shadow-2xl border border-slate-800">
@@ -772,39 +332,31 @@
                 <div class="w-6 h-6">${Icons.Waves()}</div>
                 <span class="text-xs font-bold tracking-wider">${t.brand}</span>
               </div>
-
               <p class="text-center text-slate-400 text-xs mb-2">${t.chooseLang}</p>
               <div class="grid grid-cols-2 gap-2 mb-6">
-                <button onclick="window.setLang('es')" class="py-2.5 rounded-xl text-sm font-semibold border transition-colors ${state.lang === "es" ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300 hover:border-amber-400/60"}">
-                  Español
-                </button>
-                <button onclick="window.setLang('en')" class="py-2.5 rounded-xl text-sm font-semibold border transition-colors ${state.lang === "en" ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300 hover:border-amber-400/60"}">
-                  English
-                </button>
+                <button onclick="window.setLang('es')" class="py-2.5 rounded-xl text-sm font-semibold border transition-colors ${state.lang === "es" ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300"}">Español</button>
+                <button onclick="window.setLang('en')" class="py-2.5 rounded-xl text-sm font-semibold border transition-colors ${state.lang === "en" ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300"}">English</button>
               </div>
-
               <h1 class="text-2xl font-bold text-white mb-3">${t.landingTitle}</h1>
               <p class="text-slate-400 text-sm leading-relaxed mb-6">${t.landingDesc}</p>
               <ul class="space-y-2.5 mb-8">
-                ${t.bullets.map(b => `<li class="flex items-start gap-2 text-sm text-slate-300"><span class="text-amber-400 mt-0.5">●</span>${b}</li>`).join("")}
+                ${t.bullets.map(b => `<li class="flex items-start gap-2 text-sm text-slate-300"><span class="text-amber-400">●</span>${b}</li>`).join("")}
               </ul>
-              <button onclick="window.goStep(1)" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
+              <button onclick="window.goStep(1)" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold py-3 rounded-xl flex items-center justify-center gap-2">
                 ${t.start} <div class="w-5 h-5">${Icons.ArrowRight()}</div>
               </button>
             </div>
           </div>
         `;
       } else if (state.step >= 1 && state.step <= 4) {
-        renderQuestionStep();
+        renderQuestionStep(t);
       } else if (state.step === 5) {
-        renderResults();
+        renderResults(t);
       }
     }
 
-    function renderQuestionStep() {
-      const t = STR[state.lang];
+    function renderQuestionStep(t) {
       const chartOrder = ["technical", "physical", "psych"];
-      const TOTAL_STEPS = 4;
       const root = document.getElementById("root");
 
       if (state.step >= 1 && state.step <= 3) {
@@ -812,16 +364,13 @@
         const axes = AXES[chart];
 
         let axesHtml = axes.map(ax => `
-          <div class="mb-6 pb-5 border-b border-slate-700 last:border-b-0 last:pb-0 last:mb-0">
+          <div class="mb-6 pb-5 border-b border-slate-700">
             <h3 class="text-amber-400 font-bold text-sm mb-3">${ax.title[state.lang]}</h3>
             <p class="text-slate-300 text-xs mb-2">${ax.q1.text[state.lang]}</p>
             <div class="grid grid-cols-5 gap-1.5" id="q1-${ax.key}"></div>
             <p class="text-slate-300 text-xs mb-2 mt-4">${ax.q2.text[state.lang]}</p>
             <div class="grid grid-cols-5 gap-1.5" id="q2-${ax.key}"></div>
-            ${HAS_OBJ[chart] ? `
-              <p class="text-slate-300 text-xs mb-2 mt-4">${t.objQuestionPrefix} ${ax.title[state.lang].toLowerCase()}?</p>
-              <div class="grid grid-cols-5 gap-1.5" id="obj-${ax.key}"></div>
-            ` : ""}
+            ${HAS_OBJ[chart] ? `<p class="text-slate-300 text-xs mb-2 mt-4">${state.lang === 'es' ? 'Objetivo' : 'Target'}: ${ax.title[state.lang]}</p><div class="grid grid-cols-5 gap-1.5" id="obj-${ax.key}"></div>` : ""}
           </div>
         `).join("");
 
@@ -829,33 +378,24 @@
           <div class="bg-slate-950 min-h-[640px] rounded-2xl p-6 md:p-8">
             <div class="max-w-xl mx-auto">
               <div class="flex justify-between items-center mb-4">
-                <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold tracking-wider">${t.brand}</span></div>
-                <button onclick="window.toggleLang()" class="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-amber-400 px-3 py-1.5 rounded-full border border-slate-600 hover:border-amber-400 transition-colors">
-                  <div class="w-4 h-4">${Icons.Languages()}</div>${state.lang === "en" ? "ES" : "EN"}
-                </button>
+                <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold">${t.brand}</span></div>
+                <button onclick="window.toggleLang()" class="text-xs text-slate-400">${state.lang === "en" ? "ES" : "EN"}</button>
               </div>
-              <div class="flex justify-between items-center text-xs text-slate-500 mb-1.5"><span>${t.step} ${state.step} ${t.of} ${TOTAL_STEPS}</span></div>
-              <div class="w-full h-1.5 bg-slate-800 rounded-full mb-6 overflow-hidden"><div class="h-full bg-amber-400 rounded-full transition-all" style="width: ${(state.step / TOTAL_STEPS) * 100}%"></div></div>
-
+              <div class="text-xs text-slate-500 mb-3">${t.step} ${state.step} ${t.of} 4</div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full mb-6 overflow-hidden"><div class="h-full bg-amber-400" style="width: ${(state.step / 4) * 100}%"></div></div>
               <div class="bg-slate-900 rounded-xl p-6 border border-slate-800">
                 <h2 class="font-bold text-white mb-5">${t.chartTitles[chart]}</h2>
                 ${axesHtml}
-                ${state.showWarn ? `<p class="text-amber-400 text-xs mb-4 flex items-center gap-1.5 mt-3"><div class="w-4 h-4">${Icons.AlertTriangle()}</div>${t.fieldsRequired}</p>` : ""}
-
+                ${state.showWarn ? `<p class="text-amber-400 text-xs mb-4">${t.fieldsRequired}</p>` : ""}
                 <div class="flex justify-between items-center mt-5">
-                  <button onclick="window.goBack()" ${state.step === 1 ? "disabled" : ""} class="flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg ${state.step === 1 ? "text-slate-700 cursor-not-allowed" : "text-slate-300 hover:bg-slate-800"}">
-                    <div class="w-4 h-4">${Icons.ArrowLeft()}</div>${t.back}
-                  </button>
-                  <button onclick="window.goNext()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold text-sm px-5 py-2.5 rounded-lg">
-                    ${t.next} <div class="w-4 h-4">${Icons.ArrowRight()}</div>
-                  </button>
+                  <button onclick="window.goBack()" ${state.step === 1 ? "disabled" : ""} class="text-sm text-slate-300">${t.back}</button>
+                  <button onclick="window.goNext()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold text-sm px-5 py-2.5 rounded-lg">${t.next}</button>
                 </div>
               </div>
             </div>
           </div>
         `;
 
-        // Render scale buttons after HTML
         axes.forEach(ax => {
           renderScaleButtons("q1", ax.key, ax.q1.opts[state.lang], state.answers[chart][ax.key].q1);
           renderScaleButtons("q2", ax.key, ax.q2.opts[state.lang], state.answers[chart][ax.key].q2);
@@ -868,61 +408,41 @@
           <div class="bg-slate-950 min-h-[640px] rounded-2xl p-6 md:p-8">
             <div class="max-w-xl mx-auto">
               <div class="flex justify-between items-center mb-4">
-                <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold tracking-wider">${t.brand}</span></div>
-                <button onclick="window.toggleLang()" class="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-amber-400 px-3 py-1.5 rounded-full border border-slate-600 hover:border-amber-400 transition-colors">
-                  <div class="w-4 h-4">${Icons.Languages()}</div>${state.lang === "en" ? "ES" : "EN"}
-                </button>
+                <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold">${t.brand}</span></div>
+                <button onclick="window.toggleLang()" class="text-xs text-slate-400">${state.lang === "en" ? "ES" : "EN"}</button>
               </div>
-              <div class="flex justify-between items-center text-xs text-slate-500 mb-1.5"><span>${t.step} ${state.step} ${t.of} ${TOTAL_STEPS}</span></div>
-              <div class="w-full h-1.5 bg-slate-800 rounded-full mb-6 overflow-hidden"><div class="h-full bg-amber-400 rounded-full transition-all" style="width: ${(state.step / TOTAL_STEPS) * 100}%"></div></div>
-
               <div class="bg-slate-900 rounded-xl p-6 border border-slate-800">
                 <h2 class="font-bold text-white mb-5">${t.openTitle}</h2>
                 <div class="mb-5">
                   <label class="text-sm font-medium text-slate-300 mb-2 block">${t.openGoal}</label>
-                  <textarea id="openGoal" rows="3" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700 focus:border-amber-400 focus:outline-none text-sm text-slate-100 resize-none">${state.answers.openGoal}</textarea>
+                  <textarea id="openGoal" rows="3" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700">${state.answers.openGoal}</textarea>
                 </div>
                 <div class="mb-2">
                   <label class="text-sm font-medium text-slate-300 mb-2 block">${t.openChallenge}</label>
-                  <textarea id="openChallenge" rows="3" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700 focus:border-amber-400 focus:outline-none text-sm text-slate-100 resize-none">${state.answers.openChallenge}</textarea>
+                  <textarea id="openChallenge" rows="3" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700">${state.answers.openChallenge}</textarea>
                 </div>
-                ${state.showWarn ? `<p class="text-amber-400 text-xs mb-4 flex items-center gap-1.5 mt-3"><div class="w-4 h-4">${Icons.AlertTriangle()}</div>${t.fieldsRequired}</p>` : ""}
-
+                ${state.showWarn ? `<p class="text-amber-400 text-xs mb-4">${t.fieldsRequired}</p>` : ""}
                 <div class="flex justify-between items-center mt-5">
-                  <button onclick="window.goBack()" class="flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800">
-                    <div class="w-4 h-4">${Icons.ArrowLeft()}</div>${t.back}
-                  </button>
-                  <button onclick="window.submitAnalysis()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold text-sm px-5 py-2.5 rounded-lg">
-                    ${t.submit} <div class="w-4 h-4">${Icons.ArrowRight()}</div>
-                  </button>
+                  <button onclick="window.goBack()" class="text-sm text-slate-300">${t.back}</button>
+                  <button onclick="window.submitAnalysis()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold text-sm px-5 py-2.5 rounded-lg">${t.submit}</button>
                 </div>
               </div>
             </div>
           </div>
         `;
-
-        document.getElementById("openGoal").addEventListener("change", (e) => {
-          state.answers.openGoal = e.target.value;
-        });
-        document.getElementById("openChallenge").addEventListener("change", (e) => {
-          state.answers.openChallenge = e.target.value;
-        });
+        document.getElementById("openGoal").addEventListener("change", (e) => { state.answers.openGoal = e.target.value; });
+        document.getElementById("openChallenge").addEventListener("change", (e) => { state.answers.openChallenge = e.target.value; });
       }
     }
 
     function renderScaleButtons(qType, axKey, options, currentValue) {
       const container = document.getElementById(`${qType}-${axKey}`);
       if (!container) return;
-
-      const chart = document.querySelector("[id*='" + axKey + "']").closest(".bg-slate-900") ? 
-        ["technical", "physical", "psych"].find(c => AXES[c].some(a => a.key === axKey)) : null;
-
       options.forEach((opt, i) => {
         const btn = document.createElement("button");
         btn.className = `px-1 py-2 rounded-lg text-[10px] sm:text-xs font-medium leading-tight border transition-colors ${
-          currentValue === i ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300 hover:border-amber-400/60"
+          currentValue === i ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300"
         }`;
-        btn.title = opt;
         btn.textContent = opt;
         btn.type = "button";
         btn.onclick = () => window.setAnswer(qType, axKey, i);
@@ -930,79 +450,37 @@
       });
     }
 
-    function renderResults() {
-      const t = STR[state.lang];
-      const root = document.getElementById("root");
-
+    function renderResults(t) {
       if (state.loading) {
-        root.innerHTML = `
-          <div class="bg-slate-950 min-h-[640px] rounded-2xl flex flex-col items-center justify-center p-8">
-            <div class="w-9 h-9 text-amber-400 animate-spin">${Icons.Loader2()}</div>
-            <p class="text-slate-200 font-medium mt-4">${t.loadingMsgs[state.loadingIdx]}...</p>
-          </div>
-        `;
+        const root = document.getElementById("root");
+        root.innerHTML = `<div class="bg-slate-950 min-h-[640px] rounded-2xl flex flex-col items-center justify-center p-8"><div class="w-9 h-9 text-amber-400 animate-spin">${Icons.Loader2()}</div><p class="text-slate-200 font-medium mt-4">${t.loadingMsgs[state.loadingIdx]}...</p></div>`;
       } else if (state.error) {
-        root.innerHTML = `
-          <div class="bg-slate-950 min-h-[640px] rounded-2xl flex flex-col items-center justify-center p-8 text-center">
-            <div class="w-9 h-9 text-amber-400 mb-4">${Icons.AlertTriangle()}</div>
-            <h2 class="font-bold text-white mb-2">${t.errorTitle}</h2>
-            <p class="text-slate-400 text-sm mb-6">${t.errorDesc}</p>
-            <button onclick="window.retry()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-6 py-2.5 rounded-xl flex items-center gap-2">
-              <div class="w-4 h-4">${Icons.RotateCcw()}</div>${t.retry}
-            </button>
-          </div>
-        `;
+        const root = document.getElementById("root");
+        root.innerHTML = `<div class="bg-slate-950 min-h-[640px] rounded-2xl flex flex-col items-center justify-center p-8 text-center"><div class="w-9 h-9 text-amber-400 mb-4">${Icons.AlertTriangle()}</div><h2 class="font-bold text-white mb-2">${t.errorTitle}</h2><p class="text-slate-400 text-sm mb-6">${t.errorDesc}</p><button onclick="window.retry()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-6 py-2.5 rounded-xl">${t.retry}</button></div>`;
       } else if (state.result) {
-        const chartOrder = ["technical", "physical", "psych"];
-        const radarHtml = chartOrder.map(chart => `
-          <div class="bg-slate-900 rounded-xl p-3 border border-slate-800">
-            <h3 class="text-amber-400 text-xs font-bold text-center mb-1">${t.chartTitles[chart]}</h3>
-            <div style="width: 100%; height: 300px;">Radar Chart Placeholder</div>
-          </div>
-        `).join("");
-
-        const oppHtml = (state.result.opportunityAreas || []).map((o, i) => `
-          <div class="flex gap-3">
-            <div class="w-6 h-6 rounded-full bg-amber-400 text-slate-900 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">${i + 1}</div>
-            <div><p class="font-semibold text-white text-sm">${o.title}</p><p class="text-slate-400 text-sm mt-0.5">${o.note}</p></div>
-          </div>
-        `).join("");
-
+        const root = document.getElementById("root");
+        const oppHtml = (state.result.opportunityAreas || []).map((o, i) => `<div class="flex gap-3"><div class="w-6 h-6 rounded-full bg-amber-400 text-slate-900 text-xs font-bold flex items-center justify-center">${i + 1}</div><div><p class="font-semibold text-white text-sm">${o.title}</p><p class="text-slate-400 text-sm mt-0.5">${o.note}</p></div></div>`).join("");
         root.innerHTML = `
           <div class="bg-slate-950 rounded-2xl p-6 md:p-8">
             <div class="max-w-3xl mx-auto">
               <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold tracking-wider">${t.brand}</span></div>
-                <button onclick="window.restart()" class="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-amber-400">
-                  <div class="w-4 h-4">${Icons.RotateCcw()}</div>${t.startOver}
-                </button>
+                <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold">${t.brand}</span></div>
+                <button onclick="window.restart()" class="text-xs text-slate-400">${t.startOver}</button>
               </div>
-
               <h1 class="text-xl font-bold text-white mb-1">${t.resultsTitle}</h1>
-              <p class="text-sm text-slate-400 mb-1">${t.levelLabel}: <span class="text-amber-400 font-semibold">${state.result.levelEstimate}</span></p>
-
-              <div class="grid md:grid-cols-3 gap-4 my-6">
-                ${radarHtml}
-              </div>
-
+              <p class="text-sm text-slate-400 mb-6">${t.levelLabel}: <span class="text-amber-400 font-semibold">${state.result.levelEstimate}</span></p>
               <div class="bg-slate-900 rounded-xl p-5 border border-slate-800 mb-4">
-                <h2 class="text-amber-400 font-bold text-sm uppercase tracking-wide mb-2">${t.interpretationTitle}</h2>
+                <h2 class="text-amber-400 font-bold text-sm uppercase mb-2">${t.interpretationTitle}</h2>
                 <p class="text-slate-300 text-sm leading-relaxed">${state.result.interpretation}</p>
               </div>
-
               <div class="bg-slate-900 rounded-xl p-5 border border-slate-800 mb-4">
-                <h2 class="text-amber-400 font-bold text-sm uppercase tracking-wide mb-3">${t.opportunityTitle}</h2>
-                <div class="space-y-3">
-                  ${oppHtml}
-                </div>
+                <h2 class="text-amber-400 font-bold text-sm uppercase mb-3">${t.opportunityTitle}</h2>
+                <div class="space-y-3">${oppHtml}</div>
               </div>
-
               <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-5 border border-amber-400/30">
                 <h2 class="text-amber-400 font-bold text-sm mb-2">${t.ctaTitle}</h2>
                 <p class="text-slate-300 text-sm leading-relaxed mb-4">${state.result.closing}</p>
-                <a href="${FORM_LINK}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-5 py-2.5 rounded-lg text-sm">
-                  ${t.ctaBtn} <div class="w-4 h-4">${Icons.ExternalLink()}</div>
-                </a>
+                <a href="${FORM_LINK}" target="_blank" class="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-5 py-2.5 rounded-lg text-sm">${t.ctaBtn} ${Icons.ExternalLink()}</a>
               </div>
             </div>
           </div>
@@ -1010,170 +488,15 @@
       }
     }
 
-    // Global functions
-    window.saveApiKey = () => {
-      const key = document.getElementById("apiKeyInput").value.trim();
-      if (key) {
-        state.apiKey = key;
-        localStorage.setItem("claude_api_key", key);
-        render();
-      }
-    };
-
-    window.setLang = (lang) => {
-      state.lang = lang;
-      render();
-    };
-
-    window.toggleLang = () => {
-      state.lang = state.lang === "en" ? "es" : "en";
-      render();
-    };
-
-    window.setAnswer = (qType, axKey, value) => {
-      const chartOrder = ["technical", "physical", "psych"];
-      const chart = chartOrder.find(c => AXES[c].some(a => a.key === axKey));
-      if (chart) {
-        state.answers[chart][axKey][qType] = value;
-        renderQuestionStep();
-      }
-    };
-
-    window.goStep = (step) => {
-      state.step = step;
-      state.showWarn = false;
-      render();
-    };
-
-    window.goNext = () => {
-      const chartOrder = ["technical", "physical", "psych"];
-      if (state.step >= 1 && state.step <= 3) {
-        const chart = chartOrder[state.step - 1];
-        const valid = AXES[chart].every(ax => {
-          const v = state.answers[chart][ax.key];
-          return v.q1 !== null && v.q2 !== null && (!HAS_OBJ[chart] || v.obj !== null);
-        });
-        if (!valid) {
-          state.showWarn = true;
-          renderQuestionStep();
-          return;
-        }
-      }
-      state.showWarn = false;
-      state.step++;
-      render();
-    };
-
-    window.goBack = () => {
-      if (state.step > 0) state.step--;
-      state.showWarn = false;
-      render();
-    };
-
-    window.submitAnalysis = async () => {
-      const chartOrder = ["technical", "physical", "psych"];
-      const openValid = state.answers.openGoal.trim() && state.answers.openChallenge.trim();
-      if (!openValid) {
-        state.showWarn = true;
-        renderQuestionStep();
-        return;
-      }
-
-      state.step = 5;
-      state.loading = true;
-      state.error = false;
-      state.loadingIdx = 0;
-      render();
-
-      const interval = setInterval(() => {
-        state.loadingIdx = (state.loadingIdx + 1) % STR[state.lang].loadingMsgs.length;
-        render();
-      }, 1700);
-
-      try {
-        const prompt = buildPrompt(chartOrder, state.lang);
-        const response = await fetch("https://api.anthropic.com/v1/messages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": state.apiKey,
-          },
-          body: JSON.stringify({
-            model: "claude-3-5-sonnet-20241022",
-            max_tokens: 1000,
-            system: buildSystemPrompt(state.lang),
-            messages: [{ role: "user", content: prompt }],
-          }),
-        });
-
-        const data = await response.json();
-        if (data.error) throw new Error(data.error.message || "API error");
-
-        const rawText = (data.content || []).map(c => c.text || "").join("\n");
-        let clean = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
-        const firstBrace = clean.indexOf("{");
-        const lastBrace = clean.lastIndexOf("}");
-        if (firstBrace !== -1 && lastBrace !== -1) clean = clean.slice(firstBrace, lastBrace + 1);
-        const parsed = JSON.parse(clean);
-
-        if (!parsed.opportunityAreas || !parsed.interpretation) throw new Error("Incomplete response");
-        state.result = parsed;
-      } catch (e) {
-        console.error("Analysis error:", e);
-        state.error = true;
-      } finally {
-        clearInterval(interval);
-        state.loading = false;
-        render();
-      }
-    };
-
-    function buildPrompt(chartOrder, lang) {
-      const lines = [];
-      chartOrder.forEach((chart) => {
-        lines.push(`\n${STR.en.chartTitles[chart]}:`);
-        AXES[chart].forEach((ax) => {
-          const v = state.answers[chart][ax.key];
-          const actual = (SCORES[v.q1] + SCORES[v.q2]) / 2;
-          const objetivo = HAS_OBJ[chart] && v.obj !== null ? SCORES[v.obj] : null;
-          lines.push(`- ${ax.title.en}: current ${actual}/5${objetivo !== null ? `, target ${objetivo}/5` : ""}`);
-        });
-      });
-      lines.push(`\nMain goal: ${state.answers.openGoal}`);
-      lines.push(`Biggest challenge: ${state.answers.openChallenge}`);
-      return lines.join("\n");
-    }
-
-    function buildSystemPrompt(lang) {
-      const langName = lang === "es" ? "Spanish" : "English";
-      return `You are a performance analyst for Vision Surf Coaching, run by Vicente, a Chilean sports science graduate and competitive surfer/coach based in Santa Teresa, Costa Rica, specialized in intermediate-to-advanced surfer progression.
-
-You receive a surfer's self-assessment scores (1-5 scale) across three radar charts: Technical/Tactical surfing, Physical preparation & apnea, and Psychological/Habits. All three charts include a "target" score showing where they want to be.
-
-Your job:
-1. Estimate their overall surf level in one short phrase (e.g. "Upper Intermediate") based on the technical scores and their open answers.
-2. Write a short interpretation (3-4 sentences) of what the radar patterns reveal — connect technical, physical and psychological dots where relevant. Frame this as observations, not commands. Don't tell them what to do — just show them where the imbalances or biggest gaps are.
-3. List the 2-3 biggest opportunity areas (largest gap between current and target across any of the three charts), each with a short neutral observation (not an instruction).
-4. Write a short, warm closing paragraph (2-3 sentences) that subtly connects these opportunity areas to what Vision Surf Coaching's program works on, and invites them to apply if they want to work on it — but do NOT include any URL or link, that will be added separately as a button.
-
-Respond ONLY in valid JSON, no markdown, no code fences. Write all text in ${langName}. JSON shape:
-{"levelEstimate": string, "interpretation": string, "opportunityAreas": [{"title": string, "note": string}], "closing": string}`;
-    }
-
-    window.retry = () => {
-      state.error = false;
-      window.submitAnalysis();
-    };
-
-    window.restart = () => {
-      state.answers = emptyAnswers();
-      state.result = null;
-      state.error = false;
-      state.step = 0;
-      render();
-    };
-
-    // Initial render
+    window.setLang = (lang) => { state.lang = lang; render(); };
+    window.toggleLang = () => { state.lang = state.lang === "en" ? "es" : "en"; render(); };
+    window.setAnswer = (qType, axKey, value) => { const chart = ["technical", "physical", "psych"].find(c => AXES[c].some(a => a.key === axKey)); if (chart) { state.answers[chart][axKey][qType] = value; renderQuestionStep(STR[state.lang]); } };
+    window.goStep = (step) => { state.step = step; state.showWarn = false; render(); };
+    window.goNext = () => { const chartOrder = ["technical", "physical", "psych"]; if (state.step >= 1 && state.step <= 3) { const chart = chartOrder[state.step - 1]; const valid = AXES[chart].every(ax => { const v = state.answers[chart][ax.key]; return v.q1 !== null && v.q2 !== null && (!HAS_OBJ[chart] || v.obj !== null); }); if (!valid) { state.showWarn = true; renderQuestionStep(STR[state.lang]); return; } } state.showWarn = false; state.step++; render(); };
+    window.goBack = () => { if (state.step > 0) state.step--; state.showWarn = false; render(); };
+    window.submitAnalysis = async () => { const openValid = state.answers.openGoal.trim() && state.answers.openChallenge.trim(); if (!openValid) { state.showWarn = true; renderQuestionStep(STR[state.lang]); return; } state.step = 5; state.loading = true; state.error = false; state.loadingIdx = 0; render(); const interval = setInterval(() => { state.loadingIdx = (state.loadingIdx + 1) % STR[state.lang].loadingMsgs.length; render(); }, 1500); try { await new Promise(r => setTimeout(r, 2000)); state.result = generateAnalysis(); } catch (e) { console.error("Error:", e); state.error = true; } finally { clearInterval(interval); state.loading = false; render(); } };
+    window.retry = () => { state.error = false; window.submitAnalysis(); };
+    window.restart = () => { state = { lang: state.lang, step: 0, answers: emptyAnswers(), loading: false, loadingIdx: 0, error: false, result: null, showWarn: false }; render(); };
     render();
   </script>
 </body>
