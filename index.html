@@ -67,7 +67,6 @@
     .grid { display: grid; }
     .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .max-w-md { max-width: 28rem; }
     .max-w-xl { max-width: 36rem; }
     .max-w-3xl { max-width: 48rem; }
@@ -97,38 +96,33 @@
     .tracking-wider { letter-spacing: 0.05em; }
     .tracking-wide { letter-spacing: 0.025em; }
     .uppercase { text-transform: uppercase; }
-    .hover\:text-amber-400:hover { color: #fbbf24; }
-    .hover\:border-amber-400:hover { border-color: #fbbf24; }
-    .hover\:border-amber-400\/60:hover { border-color: rgba(251, 191, 36, 0.6); }
-    .hover\:bg-amber-300:hover { background-color: #fcd34d; }
-    .hover\:bg-slate-800:hover { background-color: #1e293b; }
     button { border: none; cursor: pointer; transition: all 0.2s; font-family: inherit; }
     button:disabled { cursor: not-allowed; opacity: 0.5; }
     textarea { font-family: inherit; resize: vertical; }
     textarea:focus { border-color: #fbbf24; outline: none; }
-    .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 200ms; }
-    .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 200ms; }
+    .transition-colors { transition-property: color, background-color, border-color; transition-duration: 200ms; }
     .overflow-hidden { overflow: hidden; }
     .animate-spin { animation: spin 1s linear infinite; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .focus\:outline-none:focus { outline: none; }
-    .focus\:border-amber-400:focus { border-color: #fbbf24; }
-    .last\:border-b-0:last-child { border-bottom: none; }
-    .last\:pb-0:last-child { padding-bottom: 0; }
-    .last\:mb-0:last-child { margin-bottom: 0; }
     .inline-flex { display: inline-flex; }
-    .from-slate-800 { --tw-gradient-from: #1e293b var(--tw-gradient-stops); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(30 41 59 / 0)); }
+    .from-slate-800 { --tw-gradient-from: #1e293b; }
     .to-slate-900 { --tw-gradient-to: #0f172a; }
-    .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
-    .block { display: block; }
-    .inline { display: inline; }
-    @media (max-width: 768px) { .md\:p-8 { padding: 1.5rem; } .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .sm\:text-xs { font-size: 0.75rem; } }
+    .bg-gradient-to-br { background-image: linear-gradient(to bottom right, #1e293b, #0f172a); }
     .pb-5 { padding-bottom: 1.25rem; }
     .border-b { border-bottom: 1px solid #334155; }
     a { text-decoration: none; color: inherit; }
     a:hover { opacity: 0.9; }
-    input[type="text"], input[type="email"], textarea { background-color: #1e293b; color: #e2e8f0; border: 1px solid #334155; padding: 0.625rem 1rem; border-radius: 0.5rem; }
-    input[type="text"]:focus, input[type="email"]:focus, textarea:focus { border-color: #fbbf24; outline: none; }
+    textarea { background-color: #1e293b; color: #e2e8f0; border: 1px solid #334155; padding: 0.625rem 1rem; border-radius: 0.5rem; width: 100%; }
+    /* --- radar chart styles (restored) --- */
+    .charts-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0; }
+    @media (min-width: 700px) { .charts-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .chart-card { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 10px; text-align: center; }
+    .chart-card h3 { color: #fbbf24; font-size: 12px; margin-bottom: 6px; font-weight: 700; }
+    .legend { display: flex; justify-content: center; gap: 14px; font-size: 10px; color: #cbd5e1; margin-top: 6px; }
+    .legend span { display: inline-flex; align-items: center; gap: 4px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .level-tag { color: #94a3b8; font-size: 13px; margin-bottom: 6px; }
+    .level-tag b { color: #fbbf24; }
   </style>
 </head>
 <body>
@@ -137,11 +131,8 @@
     const Icons = {
       Waves: () => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m6.364 1.636l-.707.707M21 12h-1m-1.636 6.364l-.707-.707M12 21v-1m-6.364-1.636l.707-.707M3 12h1m1.636-6.364l.707.707"/><path d="M12 7a5 5 0 0 1 5 5m0 0a5 5 0 0 1-5 5m0-10a5 5 0 0 0-5 5m0 0a5 5 0 0 0 5 5"/></svg>`,
       ArrowRight: () => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
-      ArrowLeft: () => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
       Loader2: () => `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`,
       AlertTriangle: () => `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3.05h16.94a2 2 0 0 0 1.71-3.05L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>`,
-      RotateCcw: () => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>`,
-      Languages: () => `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6m6-6-6 6M5 20h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z"/></svg>`,
       ExternalLink: () => `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h6M15 3h6v6M10 14l8-8"/></svg>`,
     };
 
@@ -178,72 +169,42 @@
     };
 
     const HAS_OBJ = { technical: true, physical: true, psych: true };
+    const CHART_ORDER = ["technical", "physical", "psych"];
 
     const STR = {
       en: {
-        brand: "VISION SURF COACHING",
-        chooseLang: "Choose your language",
-        landingTitle: "Surf Performance Radar",
+        brand: "VISION SURF COACHING", chooseLang: "Choose your language", landingTitle: "Surf Performance Radar",
         landingDesc: "A quick, anonymous self-assessment. Answer honestly — see where your biggest opportunities are.",
         bullets: ["3 performance radars: Technical, Physical & Mental", "Current level vs. where you want to be", "100% anonymous — no personal info needed"],
-        start: "Start My Assessment",
-        back: "Back", next: "Next", submit: "See My Results",
-        step: "Step", of: "of",
+        start: "Start My Assessment", back: "Back", next: "Next", submit: "See My Results", step: "Step", of: "of",
         chartTitles: { technical: "Technical/Tactical", physical: "Physical Preparation", psych: "Psychological & Habits" },
-        openTitle: "Last Two Questions",
-        openGoal: "What's your main goal?",
-        openChallenge: "What's the biggest challenge?",
+        actualLabel: "Current", objLabel: "Target",
+        openTitle: "Last Two Questions", openGoal: "What's your main goal?", openChallenge: "What's the biggest challenge?",
         fieldsRequired: "Please answer all questions.",
         loadingMsgs: ["Analyzing...", "Processing...", "Computing...", "Generating..."],
         errorTitle: "Error", errorDesc: "Couldn't generate analysis. Try again.", retry: "Retry",
-        resultsTitle: "Your Results",
-        levelLabel: "Level",
-        interpretationTitle: "Analysis",
-        opportunityTitle: "Top Opportunities",
-        ctaTitle: "Ready to improve?",
-        ctaBtn: "Apply Now",
-        startOver: "Start Over",
+        resultsTitle: "Your Results", levelLabel: "Level", interpretationTitle: "Analysis",
+        opportunityTitle: "Top Opportunities", ctaTitle: "Ready to improve?", ctaBtn: "Apply Now", startOver: "Start Over",
       },
       es: {
-        brand: "VISION SURF COACHING",
-        chooseLang: "Elige idioma",
-        landingTitle: "Radar de Rendimiento",
+        brand: "VISION SURF COACHING", chooseLang: "Elige idioma", landingTitle: "Radar de Rendimiento",
         landingDesc: "Autoevaluación rápida y anónima. Responde con honestidad.",
         bullets: ["3 radares: Técnico, Físico y Mental", "Nivel actual vs. objetivo", "100% anónimo"],
-        start: "Comenzar",
-        back: "Atrás", next: "Siguiente", submit: "Ver Resultados",
-        step: "Paso", of: "de",
+        start: "Comenzar", back: "Atrás", next: "Siguiente", submit: "Ver Resultados", step: "Paso", of: "de",
         chartTitles: { technical: "Técnico/Táctico", physical: "Preparación Física", psych: "Psicológico y Hábitos" },
-        openTitle: "Últimas Preguntas",
-        openGoal: "¿Cuál es tu meta?",
-        openChallenge: "¿Cuál es el mayor desafío?",
+        actualLabel: "Actual", objLabel: "Objetivo",
+        openTitle: "Últimas Preguntas", openGoal: "¿Cuál es tu meta?", openChallenge: "¿Cuál es el mayor desafío?",
         fieldsRequired: "Responde todas las preguntas.",
         loadingMsgs: ["Analizando...", "Procesando...", "Calculando...", "Generando..."],
         errorTitle: "Error", errorDesc: "No pudimos generar análisis. Intenta de nuevo.", retry: "Reintentar",
-        resultsTitle: "Tus Resultados",
-        levelLabel: "Nivel",
-        interpretationTitle: "Análisis",
-        opportunityTitle: "Principales Oportunidades",
-        ctaTitle: "¿Listo para mejorar?",
-        ctaBtn: "Postular",
-        startOver: "Empezar de Nuevo",
+        resultsTitle: "Tus Resultados", levelLabel: "Nivel", interpretationTitle: "Análisis",
+        opportunityTitle: "Principales Oportunidades", ctaTitle: "¿Listo para mejorar?", ctaBtn: "Postular", startOver: "Empezar de Nuevo",
       },
-    };
-
-    let state = {
-      lang: "es",
-      step: 0,
-      answers: emptyAnswers(),
-      loading: false,
-      loadingIdx: 0,
-      error: false,
-      result: null,
-      showWarn: false,
     };
 
     function emptyAnswers() {
       const a = {};
-      ["technical", "physical", "psych"].forEach((chart) => {
+      CHART_ORDER.forEach((chart) => {
         a[chart] = {};
         AXES[chart].forEach((ax) => { a[chart][ax.key] = { q1: null, q2: null, obj: null }; });
       });
@@ -252,17 +213,56 @@
       return a;
     }
 
+    let state = { lang: "es", step: 0, answers: emptyAnswers(), loading: false, loadingIdx: 0, error: false, result: null, showWarn: false };
+
+    /* ---------- radar chart (restored) ---------- */
+    function polarPoint(cx, cy, r, angleDeg) {
+      const rad = (angleDeg - 90) * Math.PI / 180;
+      return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+    }
+    function radarSVG(data) {
+      const cx = 110, cy = 110, maxR = 85, n = data.length;
+      const angleStep = 360 / n;
+      let gridRings = "";
+      for (let ring = 1; ring <= 5; ring++) {
+        const r = maxR * ring / 5;
+        let pts = "";
+        for (let i = 0; i < n; i++) { const [x, y] = polarPoint(cx, cy, r, i * angleStep); pts += x + "," + y + " "; }
+        gridRings += `<polygon points="${pts}" fill="none" stroke="#334155" stroke-width="1"/>`;
+      }
+      let axisLines = "", labels = "";
+      data.forEach((d, i) => {
+        const [x, y] = polarPoint(cx, cy, maxR, i * angleStep);
+        axisLines += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#334155" stroke-width="1"/>`;
+        const [lx, ly] = polarPoint(cx, cy, maxR + 16, i * angleStep);
+        const words = (d.title || "").split(" ");
+        labels += `<text x="${lx}" y="${ly}" fill="#fbbf24" font-size="7" text-anchor="middle">${words.slice(0, 2).join(" ")}</text>`;
+      });
+      function poly(key, color, opacity) {
+        let pts = "";
+        data.forEach((d, i) => { const val = d[key] || 0; const r = (val / 5) * maxR; const [x, y] = polarPoint(cx, cy, r, i * angleStep); pts += x + "," + y + " "; });
+        return `<polygon points="${pts}" fill="${color}" fill-opacity="${opacity}" stroke="${color}" stroke-width="2"/>`;
+      }
+      const hasTarget = data.some(d => d.target !== null && d.target !== undefined);
+      return `<svg viewBox="0 0 220 230" width="100%" height="200">
+        ${gridRings}${axisLines}
+        ${hasTarget ? poly("target", "#fbbf24", 0.15) : ""}
+        ${poly("actual", "#22d3ee", 0.35)}
+        ${labels}
+      </svg>`;
+    }
+    /* --------------------------------------------- */
+
     function generateAnalysis() {
-      const chartOrder = ["technical", "physical", "psych"];
       const scores = {};
       const gaps = {};
-      
-      chartOrder.forEach(chart => {
+
+      CHART_ORDER.forEach(chart => {
         const chartScores = AXES[chart].map(ax => {
           const v = state.answers[chart][ax.key];
           const actual = (SCORES[v.q1] + SCORES[v.q2]) / 2;
           const target = v.obj !== null ? SCORES[v.obj] : 2.5;
-          return { actual, target, title: ax.title[state.lang] };
+          return { actual: Math.round(actual * 10) / 10, target, title: ax.title[state.lang] };
         });
         scores[chart] = chartScores;
         const avgActual = chartScores.reduce((s, a) => s + a.actual, 0) / chartScores.length;
@@ -271,30 +271,25 @@
       });
 
       const overallScore = (scores.technical.reduce((s, a) => s + a.actual, 0) + scores.physical.reduce((s, a) => s + a.actual, 0) + scores.psych.reduce((s, a) => s + a.actual, 0)) / (AXES.technical.length + AXES.physical.length + AXES.psych.length);
-      
+
       let levelEstimate = state.lang === "es" ? "Principiante" : "Beginner";
       if (overallScore >= 4.2) levelEstimate = state.lang === "es" ? "Avanzado" : "Advanced";
       else if (overallScore >= 3.5) levelEstimate = state.lang === "es" ? "Intermedio" : "Intermediate";
       else if (overallScore >= 2.8) levelEstimate = state.lang === "es" ? "Competente" : "Competent";
 
-      const topGaps = chartOrder.map(c => ({ chart: c, ...gaps[c] })).sort((a, b) => b.gap - a.gap).slice(0, 2);
+      const topGaps = CHART_ORDER.map(c => ({ chart: c, ...gaps[c] })).sort((a, b) => b.gap - a.gap).slice(0, 2);
       const opportunities = [];
-      
+
       topGaps.forEach(g => {
         const weakAreas = scores[g.chart].filter(s => s.actual < 3).sort((a, b) => a.actual - b.actual);
         if (weakAreas.length > 0) {
-          opportunities.push({
-            title: weakAreas[0].title,
-            note: state.lang === "es" 
-              ? "Es tu área con mayor potencial de crecimiento" 
-              : "Your biggest growth opportunity"
-          });
+          opportunities.push({ title: weakAreas[0].title, note: state.lang === "es" ? "Es tu área con mayor potencial de crecimiento" : "Your biggest growth opportunity" });
         }
       });
 
       if (opportunities.length < 3) {
         const allWeak = [];
-        chartOrder.forEach(c => {
+        CHART_ORDER.forEach(c => {
           scores[c].forEach(s => {
             if (s.actual < 3.5 && !opportunities.find(o => o.title === s.title)) {
               allWeak.push({ title: s.title, note: state.lang === "es" ? "Merece atención dedicada" : "Needs dedicated focus" });
@@ -309,15 +304,10 @@
         : `Your profile shows interesting strengths paired with clear development areas. At a ${overallScore.toFixed(1)}/5 overall level, focus on ${topGaps[0].chart === 'technical' ? 'technique' : topGaps[0].chart === 'physical' ? 'physical prep' : 'mental consistency'}. Personalized coaching will accelerate your progress.`;
 
       const closing = state.lang === "es"
-        ? "Estás listo para el siguiente nivel. Nuestro programa está diseñado para atletas como tú que quieren ir más allá. Reserva tu sesión de consulta."
-        : "You're ready for the next level. Our program is built for surfers like you who want more. Book your consultation call.";
+        ? "Estás listo para el siguiente nivel. Nuestro programa está diseñado para atletas como tú que quieren ir más allá. Postula a nuestro programa actual."
+        : "You're ready for the next level. Our program is built for surfers like you who want more. Apply to our current program.";
 
-      return {
-        levelEstimate,
-        interpretation,
-        opportunityAreas: opportunities.slice(0, 3),
-        closing,
-      };
+      return { levelEstimate, interpretation, opportunityAreas: opportunities.slice(0, 3), closing, scores };
     }
 
     function render() {
@@ -356,11 +346,10 @@
     }
 
     function renderQuestionStep(t) {
-      const chartOrder = ["technical", "physical", "psych"];
       const root = document.getElementById("root");
 
       if (state.step >= 1 && state.step <= 3) {
-        const chart = chartOrder[state.step - 1];
+        const chart = CHART_ORDER[state.step - 1];
         const axes = AXES[chart];
 
         let axesHtml = axes.map(ax => `
@@ -375,8 +364,8 @@
         `).join("");
 
         root.innerHTML = `
-          <div class="bg-slate-950 min-h-[640px] rounded-2xl p-6 md:p-8">
-            <div class="max-w-xl mx-auto">
+          <div class="bg-slate-950 rounded-2xl p-6">
+            <div class="max-w-xl" style="margin:0 auto;">
               <div class="flex justify-between items-center mb-4">
                 <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold">${t.brand}</span></div>
                 <button onclick="window.toggleLang()" class="text-xs text-slate-400">${state.lang === "en" ? "ES" : "EN"}</button>
@@ -399,14 +388,12 @@
         axes.forEach(ax => {
           renderScaleButtons("q1", ax.key, ax.q1.opts[state.lang], state.answers[chart][ax.key].q1);
           renderScaleButtons("q2", ax.key, ax.q2.opts[state.lang], state.answers[chart][ax.key].q2);
-          if (HAS_OBJ[chart]) {
-            renderScaleButtons("obj", ax.key, OBJ_OPTS[state.lang], state.answers[chart][ax.key].obj);
-          }
+          if (HAS_OBJ[chart]) renderScaleButtons("obj", ax.key, OBJ_OPTS[state.lang], state.answers[chart][ax.key].obj);
         });
       } else if (state.step === 4) {
         root.innerHTML = `
-          <div class="bg-slate-950 min-h-[640px] rounded-2xl p-6 md:p-8">
-            <div class="max-w-xl mx-auto">
+          <div class="bg-slate-950 rounded-2xl p-6">
+            <div class="max-w-xl" style="margin:0 auto;">
               <div class="flex justify-between items-center mb-4">
                 <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold">${t.brand}</span></div>
                 <button onclick="window.toggleLang()" class="text-xs text-slate-400">${state.lang === "en" ? "ES" : "EN"}</button>
@@ -414,12 +401,12 @@
               <div class="bg-slate-900 rounded-xl p-6 border border-slate-800">
                 <h2 class="font-bold text-white mb-5">${t.openTitle}</h2>
                 <div class="mb-5">
-                  <label class="text-sm font-medium text-slate-300 mb-2 block">${t.openGoal}</label>
-                  <textarea id="openGoal" rows="3" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700">${state.answers.openGoal}</textarea>
+                  <label class="text-sm font-medium text-slate-300 mb-2" style="display:block;">${t.openGoal}</label>
+                  <textarea id="openGoal" rows="3">${state.answers.openGoal}</textarea>
                 </div>
                 <div class="mb-2">
-                  <label class="text-sm font-medium text-slate-300 mb-2 block">${t.openChallenge}</label>
-                  <textarea id="openChallenge" rows="3" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700">${state.answers.openChallenge}</textarea>
+                  <label class="text-sm font-medium text-slate-300 mb-2" style="display:block;">${t.openChallenge}</label>
+                  <textarea id="openChallenge" rows="3">${state.answers.openChallenge}</textarea>
                 </div>
                 ${state.showWarn ? `<p class="text-amber-400 text-xs mb-4">${t.fieldsRequired}</p>` : ""}
                 <div class="flex justify-between items-center mt-5">
@@ -440,9 +427,8 @@
       if (!container) return;
       options.forEach((opt, i) => {
         const btn = document.createElement("button");
-        btn.className = `px-1 py-2 rounded-lg text-[10px] sm:text-xs font-medium leading-tight border transition-colors ${
-          currentValue === i ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300"
-        }`;
+        btn.className = `px-1 py-2 rounded-lg text-xs font-medium leading-tight border transition-colors ${currentValue === i ? "bg-amber-400 border-amber-400 text-slate-900" : "border-slate-600 text-slate-300"}`;
+        btn.style.fontSize = "10px";
         btn.textContent = opt;
         btn.type = "button";
         btn.onclick = () => window.setAnswer(qType, axKey, i);
@@ -451,24 +437,32 @@
     }
 
     function renderResults(t) {
+      const root = document.getElementById("root");
       if (state.loading) {
-        const root = document.getElementById("root");
-        root.innerHTML = `<div class="bg-slate-950 min-h-[640px] rounded-2xl flex flex-col items-center justify-center p-8"><div class="w-9 h-9 text-amber-400 animate-spin">${Icons.Loader2()}</div><p class="text-slate-200 font-medium mt-4">${t.loadingMsgs[state.loadingIdx]}...</p></div>`;
+        root.innerHTML = `<div class="bg-slate-950 rounded-2xl flex flex-col items-center justify-center p-8" style="min-height:500px;"><div class="w-9 h-9 text-amber-400 animate-spin">${Icons.Loader2()}</div><p class="text-slate-200 font-medium mt-4">${t.loadingMsgs[state.loadingIdx]}...</p></div>`;
       } else if (state.error) {
-        const root = document.getElementById("root");
-        root.innerHTML = `<div class="bg-slate-950 min-h-[640px] rounded-2xl flex flex-col items-center justify-center p-8 text-center"><div class="w-9 h-9 text-amber-400 mb-4">${Icons.AlertTriangle()}</div><h2 class="font-bold text-white mb-2">${t.errorTitle}</h2><p class="text-slate-400 text-sm mb-6">${t.errorDesc}</p><button onclick="window.retry()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-6 py-2.5 rounded-xl">${t.retry}</button></div>`;
+        root.innerHTML = `<div class="bg-slate-950 rounded-2xl flex flex-col items-center justify-center p-8 text-center" style="min-height:500px;"><div class="w-9 h-9 text-amber-400 mb-4">${Icons.AlertTriangle()}</div><h2 class="font-bold text-white mb-2">${t.errorTitle}</h2><p class="text-slate-400 text-sm mb-6">${t.errorDesc}</p><button onclick="window.retry()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-6 py-2.5 rounded-xl">${t.retry}</button></div>`;
       } else if (state.result) {
-        const root = document.getElementById("root");
-        const oppHtml = (state.result.opportunityAreas || []).map((o, i) => `<div class="flex gap-3"><div class="w-6 h-6 rounded-full bg-amber-400 text-slate-900 text-xs font-bold flex items-center justify-center">${i + 1}</div><div><p class="font-semibold text-white text-sm">${o.title}</p><p class="text-slate-400 text-sm mt-0.5">${o.note}</p></div></div>`).join("");
+        const oppHtml = (state.result.opportunityAreas || []).map((o, i) => `<div class="flex gap-3 mb-3"><div class="w-6 h-6 rounded-full bg-amber-400 text-slate-900 text-xs font-bold flex items-center justify-center" style="flex-shrink:0;">${i + 1}</div><div><p class="font-semibold text-white text-sm">${o.title}</p><p class="text-slate-400 text-sm mt-0.5">${o.note}</p></div></div>`).join("");
+
+        const chartsHtml = CHART_ORDER.map(chart => `
+          <div class="chart-card">
+            <h3>${t.chartTitles[chart]}</h3>
+            ${radarSVG(state.result.scores[chart])}
+            <div class="legend"><span><span class="dot" style="background:#22d3ee"></span>${t.actualLabel}</span>${HAS_OBJ[chart] ? `<span><span class="dot" style="background:#fbbf24"></span>${t.objLabel}</span>` : ""}</div>
+          </div>
+        `).join("");
+
         root.innerHTML = `
-          <div class="bg-slate-950 rounded-2xl p-6 md:p-8">
-            <div class="max-w-3xl mx-auto">
+          <div class="bg-slate-950 rounded-2xl p-6">
+            <div class="max-w-3xl" style="margin:0 auto;">
               <div class="flex justify-between items-center mb-6">
                 <div class="flex items-center gap-2 text-amber-400"><div class="w-5 h-5">${Icons.Waves()}</div><span class="text-xs font-bold">${t.brand}</span></div>
                 <button onclick="window.restart()" class="text-xs text-slate-400">${t.startOver}</button>
               </div>
               <h1 class="text-xl font-bold text-white mb-1">${t.resultsTitle}</h1>
-              <p class="text-sm text-slate-400 mb-6">${t.levelLabel}: <span class="text-amber-400 font-semibold">${state.result.levelEstimate}</span></p>
+              <p class="level-tag">${t.levelLabel}: <b>${state.result.levelEstimate}</b></p>
+              <div class="charts-grid">${chartsHtml}</div>
               <div class="bg-slate-900 rounded-xl p-5 border border-slate-800 mb-4">
                 <h2 class="text-amber-400 font-bold text-sm uppercase mb-2">${t.interpretationTitle}</h2>
                 <p class="text-slate-300 text-sm leading-relaxed">${state.result.interpretation}</p>
@@ -490,11 +484,19 @@
 
     window.setLang = (lang) => { state.lang = lang; render(); };
     window.toggleLang = () => { state.lang = state.lang === "en" ? "es" : "en"; render(); };
-    window.setAnswer = (qType, axKey, value) => { const chart = ["technical", "physical", "psych"].find(c => AXES[c].some(a => a.key === axKey)); if (chart) { state.answers[chart][axKey][qType] = value; renderQuestionStep(STR[state.lang]); } };
+    window.setAnswer = (qType, axKey, value) => { const chart = CHART_ORDER.find(c => AXES[c].some(a => a.key === axKey)); if (chart) { state.answers[chart][axKey][qType] = value; renderQuestionStep(STR[state.lang]); } };
     window.goStep = (step) => { state.step = step; state.showWarn = false; render(); };
-    window.goNext = () => { const chartOrder = ["technical", "physical", "psych"]; if (state.step >= 1 && state.step <= 3) { const chart = chartOrder[state.step - 1]; const valid = AXES[chart].every(ax => { const v = state.answers[chart][ax.key]; return v.q1 !== null && v.q2 !== null && (!HAS_OBJ[chart] || v.obj !== null); }); if (!valid) { state.showWarn = true; renderQuestionStep(STR[state.lang]); return; } } state.showWarn = false; state.step++; render(); };
+    window.goNext = () => { if (state.step >= 1 && state.step <= 3) { const chart = CHART_ORDER[state.step - 1]; const valid = AXES[chart].every(ax => { const v = state.answers[chart][ax.key]; return v.q1 !== null && v.q2 !== null && (!HAS_OBJ[chart] || v.obj !== null); }); if (!valid) { state.showWarn = true; renderQuestionStep(STR[state.lang]); return; } } state.showWarn = false; state.step++; render(); };
     window.goBack = () => { if (state.step > 0) state.step--; state.showWarn = false; render(); };
-    window.submitAnalysis = async () => { const openValid = state.answers.openGoal.trim() && state.answers.openChallenge.trim(); if (!openValid) { state.showWarn = true; renderQuestionStep(STR[state.lang]); return; } state.step = 5; state.loading = true; state.error = false; state.loadingIdx = 0; render(); const interval = setInterval(() => { state.loadingIdx = (state.loadingIdx + 1) % STR[state.lang].loadingMsgs.length; render(); }, 1500); try { await new Promise(r => setTimeout(r, 2000)); state.result = generateAnalysis(); } catch (e) { console.error("Error:", e); state.error = true; } finally { clearInterval(interval); state.loading = false; render(); } };
+    window.submitAnalysis = async () => {
+      const openValid = state.answers.openGoal.trim() && state.answers.openChallenge.trim();
+      if (!openValid) { state.showWarn = true; renderQuestionStep(STR[state.lang]); return; }
+      state.step = 5; state.loading = true; state.error = false; state.loadingIdx = 0; render();
+      const interval = setInterval(() => { state.loadingIdx = (state.loadingIdx + 1) % STR[state.lang].loadingMsgs.length; render(); }, 1500);
+      try { await new Promise(r => setTimeout(r, 1200)); state.result = generateAnalysis(); }
+      catch (e) { console.error("Error:", e); state.error = true; }
+      finally { clearInterval(interval); state.loading = false; render(); }
+    };
     window.retry = () => { state.error = false; window.submitAnalysis(); };
     window.restart = () => { state = { lang: state.lang, step: 0, answers: emptyAnswers(), loading: false, loadingIdx: 0, error: false, result: null, showWarn: false }; render(); };
     render();
